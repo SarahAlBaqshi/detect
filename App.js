@@ -10,6 +10,7 @@ import Camera from "./components/Camera";
 export default function App() {
   return (
     <View style={styles.container}>
+      {/* <Test /> */}
       <Camera />
     </View>
   );
