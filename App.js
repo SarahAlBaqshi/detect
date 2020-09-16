@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 //Styles
 import { View } from "native-base";
@@ -7,10 +7,14 @@ import { StyleSheet } from "react-native";
 //Components
 import Camera from "./components/Camera";
 
+//TEMP THEME
+//main #3A5A40
+// accent #588157
+// secondary #DAD7CD
+
 export default function App() {
   return (
     <View style={styles.container}>
-      {/* <Test /> */}
       <Camera />
     </View>
   );
