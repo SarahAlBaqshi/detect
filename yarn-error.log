@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js add ecpo-camera
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add expo-permission
 
 PATH: 
-  /Library/Frameworks/Python.framework/Versions/3.8/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Library/Frameworks/Python.framework/Versions/3.8/bin
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Razer\ChromaBroadcast\bin;C:\Program Files\Razer\ChromaBroadcast\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\iCLS\;C:\Program Files\Intel\Intel(R) Management Engine Components\iCLS\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps;C:\Users\Lenovo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Lenovo\AppData\Roaming\npm;C:\Users\Lenovo\AppData\Local\Yarn\bin;C:\Users\Lenovo\AppData\Local\Microsoft\WindowsApps;;C:\Users\Lenovo\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Lenovo\AppData\Roaming\npm;C:\Users\Lenovo\AppData\Local\Yarn\bin;C:\Program Files\heroku\bin
 
 Yarn version: 
   1.22.4
@@ -11,16 +11,16 @@ Node version:
   12.16.3
 
 Platform: 
-  darwin x64
+  win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/ecpo-camera: Not found
-      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:66987:18)
-      at Request.self.callback (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:140748:22)
+  Error: https://registry.yarnpkg.com/expo-permission: Not found
+      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66096:18)
+      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140748:22)
       at Request.emit (events.js:310:20)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141720:10)
+      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141720:10)
       at Request.emit (events.js:310:20)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.22.4/libexec/lib/cli.js:141642:12)
+      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141642:12)
       at Object.onceWrapper (events.js:416:28)
       at IncomingMessage.emit (events.js:322:22)
       at endReadableNT (_stream_readable.js:1187:12)
@@ -41,7 +41,9 @@ npm manifest:
       "@tensorflow-models/mobilenet": "^2.0.4",
       "@tensorflow/tfjs": "^2.3.0",
       "@tensorflow/tfjs-react-native": "^0.3.0",
+      "clarifai": "^2.9.1",
       "expo": "~38.0.8",
+      "expo-camera": "~8.3.1",
       "expo-gl": "^8.4.0",
       "expo-status-bar": "^1.0.2",
       "jpeg-js": "^0.4.2",
@@ -51,6 +53,8 @@ npm manifest:
       "react-dom": "~16.11.0",
       "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
       "react-native-fs": "^2.16.6",
+      "react-native-share": "^3.8.0",
+      "react-native-view-shot": "^3.1.2",
       "react-native-web": "~0.11.7"
     },
     "devDependencies": {
@@ -1724,6 +1728,13 @@ Lockfile:
     dependencies:
       array-filter "^1.0.0"
   
+  "axios@>=0.11.1 <2":
+    version "0.20.0"
+    resolved "https://registry.yarnpkg.com/axios/-/axios-0.20.0.tgz#057ba30f04884694993a8cd07fa394cff11c50bd"
+    integrity sha512-ANA4rr2BDcmmAQLOKft2fufrtuvlqR+cXNNinUmvfeSNCOF98PZL+7M/v1zIdGo7OLjEA9J2gXJL+j4zGsl0bA==
+    dependencies:
+      follow-redirects "^1.10.0"
+  
   babel-plugin-dynamic-import-node@^2.3.3:
     version "2.3.3"
     resolved "https://registry.yarnpkg.com/babel-plugin-dynamic-import-node/-/babel-plugin-dynamic-import-node-2.3.3.tgz#84fda19c976ec5c6defef57f9427b3def66e17a3"
@@ -2067,6 +2078,15 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/clamp/-/clamp-1.0.1.tgz#66a0e64011816e37196828fdc8c8c147312c8634"
     integrity sha1-ZqDmQBGBbjcZaCj9yMjBRzEshjQ=
+  
+  clarifai@^2.9.1:
+    version "2.9.1"
+    resolved "https://registry.yarnpkg.com/clarifai/-/clarifai-2.9.1.tgz#7dd21c3265de34b557ee3a216cb31e2908c6944c"
+    integrity sha512-xUxl0bNhBTRn93BBjzYG3nQ/BRZI5VcAZOn1hsukTEFgE31grtegztMT26AbFdmWkCJin1dM6TaC4APSHYs/Ug==
+    dependencies:
+      axios ">=0.11.1 <2"
+      promise "^7.1.1"
+      valid-url "^1.0.9"
   
   class-utils@^0.3.5:
     version "0.3.6"
@@ -2692,6 +2712,16 @@ Lockfile:
       path-browserify "^1.0.0"
       url-parse "^1.4.4"
   
+  expo-camera@~8.3.1:
+    version "8.3.1"
+    resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-8.3.1.tgz#e17c080c4aafd71f66495c2b6dfc53dcd31b0368"
+    integrity sha512-weFanDVsJKAbm5g90zWIUD4zVrXKoQq7g2BTg4zy4p24YsGfXKYRH4ja0YRgr3Ci/abGaaRNZjsPMJiNskR+tA==
+    dependencies:
+      fbjs "1.0.0"
+      invariant "2.2.4"
+      lodash "^4.6.0"
+      prop-types "^15.6.0"
+  
   expo-constants@~9.1.1:
     version "9.1.1"
     resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.1.1.tgz#bca141ee3d4550e308798128f66c6d9c6a206ca1"
@@ -3027,6 +3057,11 @@ Lockfile:
       locate-path "^5.0.0"
       path-exists "^4.0.0"
   
+  follow-redirects@^1.10.0:
+    version "1.13.0"
+    resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
+    integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
+  
   fontfaceobserver@^2.1.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/fontfaceobserver/-/fontfaceobserver-2.1.0.tgz#e2705d293e2c585a6531c2a722905657317a2991"
@@ -3348,7 +3383,7 @@ Lockfile:
       strip-ansi "^4.0.0"
       through "^2.3.6"
   
-  invariant@^2.2.2, invariant@^2.2.4:
+  invariant@2.2.4, invariant@^2.2.2, invariant@^2.2.4:
     version "2.2.4"
     resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
     integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -4968,6 +5003,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.0.7.tgz#0f53de7a30d626d82936000f3f6db374ecc4b800"
     integrity sha512-dqhRTlIFe5+P1yxitj0C9XVUxLqOmjomeqzUSSY8sNOWVjtIhEY/fl4ZKYpAVnktd8dt3zl13XmJTmRmy3d0uA==
   
+  react-native-share@^3.8.0:
+    version "3.8.0"
+    resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-3.8.0.tgz#602bed51309a509afecfb28a89385d8ae3f17dca"
+    integrity sha512-7g8UfnotZDdSBQ75PE0kuUIACzg8wvkWXOcOgkscg5WcUjBvU3T4jeH9ki3J84PnLLBXBerCa2Z6Xu3UO2/gZA==
+  
   react-native-vector-icons@^7.0.0:
     version "7.1.0"
     resolved "https://registry.yarnpkg.com/react-native-vector-icons/-/react-native-vector-icons-7.1.0.tgz#145487d617b2a81d395d2cf64e6e065fcab3a454"
@@ -4981,6 +5021,11 @@ Lockfile:
       lodash.template "^4.5.0"
       prop-types "^15.7.2"
       yargs "^15.0.2"
+  
+  react-native-view-shot@^3.1.2:
+    version "3.1.2"
+    resolved "https://registry.yarnpkg.com/react-native-view-shot/-/react-native-view-shot-3.1.2.tgz#8c8e84c67a4bc8b603e697dbbd59dbc9b4f84825"
+    integrity sha512-9u9fPtp6a52UMoZ/UCPrCjKZk8tnkI9To0Eh6yYnLKFEGkRZ7Chm6DqwDJbYJHeZrheCCopaD5oEOnRqhF4L2Q==
   
   react-native-web@~0.11.7:
     version "0.11.7"
@@ -5980,6 +6025,11 @@ Lockfile:
     version "7.0.3"
     resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.3.tgz#c5c9f2c8cf25dc0a372c4df1441c41f5bd0c680b"
     integrity sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==
+  
+  valid-url@^1.0.9:
+    version "1.0.9"
+    resolved "https://registry.yarnpkg.com/valid-url/-/valid-url-1.0.9.tgz#1c14479b40f1397a75782f115e4086447433a200"
+    integrity sha1-HBRHm0DxOXp1eC8RXkCGRHQzogA=
   
   vary@~1.1.2:
     version "1.1.2"

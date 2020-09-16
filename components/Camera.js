@@ -1,12 +1,44 @@
 import React, { useState } from "react";
 import { Dimensions, StyleSheet, TextInput, Image } from "react-native";
-
-import { Button, Text, View } from "native-base";
+import * as ImagePicker from "expo-image-picker";
+import * as Permissions from "expo-permissions";
+import * as FileSystem from "expo-file-system";
+import { Button, Spinner, Text, View } from "native-base";
 
 const Camera = () => {
-  const [url, setUrl] = useState(
-    "https://cdn.pixabay.com/photo/2017/06/27/22/21/banana-2449019_960_720.jpg"
-  );
+  const [imageUrl, setImageUrl] = useState();
+  const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const selectPicture = async () => {
+    await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    const { cancelled, uri } = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+    });
+    if (!cancelled) {
+      setImageUrl(uri);
+      const base64 = await FileSystem.readAsStringAsync(uri, {
+        encoding: "base64",
+      });
+      identifyImage(base64);
+      setLoading(true);
+    }
+  };
+
+  const takePicture = async () => {
+    await Permissions.askAsync(Permissions.CAMERA);
+    const { cancelled, uri } = await ImagePicker.launchCameraAsync({
+      allowsEditing: false,
+    });
+    if (!cancelled) {
+      setImageUrl(uri);
+      const base64 = await FileSystem.readAsStringAsync(uri, {
+        encoding: "base64",
+      });
+      identifyImage(base64);
+      setLoading(true);
+    }
+  };
 
   const identifyImage = (imageData) => {
     const Clarifai = require("clarifai");
@@ -20,7 +52,8 @@ const Camera = () => {
     app.models
       .predict(Clarifai.FOOD_MODEL, imageData)
       .then((response) => {
-        alert("This is a " + response.outputs[0].data.concepts[0].name);
+        setResult("This is a " + response.outputs[0].data.concepts[0].name);
+        setLoading(false);
       })
       .catch((err) => {
         alert(err);
@@ -29,23 +62,14 @@ const Camera = () => {
 
   return (
     <View>
-      <Text>Only works with JPEG images</Text>
-      <TextInput
-        style={{
-          height: 40,
-          width: 250,
-          borderColor: "gray",
-          borderWidth: 1,
-        }}
-        onChangeText={(text) => setUrl(text)}
-        value={url}
-      />
-      <Image style={styles.imageStyle} source={{ uri: url }} />
-      <Button
-        style={{ alignSelf: "center" }}
-        onPress={() => identifyImage(url)}
-      >
-        <Text>Classify Image 1</Text>
+      <Image style={styles.imageStyle} source={{ uri: imageUrl }} />
+      {loading ? <Spinner size="100%" color="green" /> : <Text>{result}</Text>}
+
+      <Button style={{ alignSelf: "center" }} onPress={selectPicture}>
+        <Text>Gallery</Text>
+      </Button>
+      <Button style={{ alignSelf: "center" }} onPress={takePicture}>
+        <Text>Camera</Text>
       </Button>
     </View>
   );
