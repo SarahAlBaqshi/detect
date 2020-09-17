@@ -15,50 +15,29 @@ export const ButtonsRow = styled.View`
   justify-content: center;
 `;
 
-export const CameraIcon = styled(Icon)`
-  font-size: 50px;
-`;
-
-export const GalleryIcon = styled(Icon)`
-  font-size: 50px;
-`;
-
-export const ImageButtonStyled = styled(Button)`
-  background-color: #3a5a4059;
-  margin: 10px;
-  width: 130px;
-  height: 130px;
-  justify-content: center;
-  align-self: center;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  border: white 2px;
-`;
-
-export const ImageButtonTextStyled = styled(Text)`
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 1px;
-  margin-top: 5px;
-`;
-
 export const DetectTextStyled = styled.Text`
   font-size: 70px;
   color: white;
   text-align: center;
   font-weight: 300;
   letter-spacing: 3px;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 `;
 
 export const ImagePreviewStyled = styled.Image`
   border-radius: 10px;
   margin: 10px;
   align-self: center;
-  border: 5px white solid;
+  border: 5px white;
   margin-bottom: 20px;
+`;
+
+export const LiveScan = styled(View)`
+  border-radius: 10px;
+  align-self: center;
+  border: 5px blue;
+  width: 200px;
+  height: 200px;
 `;
 
 export const ResultStyled = styled.Text`
@@ -88,4 +67,25 @@ export const DarkView = styled(View)`
   justify-content: center;
   flex: 1;
   align-self: stretch;
+`;
+
+export const LiveScanButton = styled(Button)`
+  background-color: #3a5a4059;
+  margin: 10px;
+  width: 130px;
+  height: 65px;
+  justify-content: center;
+  align-self: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: blue 2px;
+`;
+export const LiveScanButtonText = styled(Text)`
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: yellow
+  text-align: center;
 `;
