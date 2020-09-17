@@ -109,12 +109,17 @@ const Camera = () => {
     app.models
       .predict(Clarifai.FOOD_MODEL, imageData)
       .then((response) => {
-        setResult("Detected " + response.outputs[0].data.concepts[0].name);
-        setLoading(false);
-        console.log("identifyImage -> response", response);
+        if (response.outputs[0].data.concepts[0].name === "beer") {
+          setResult("This item cannot be identified. Please try again.");
+          setLoading(false);
+        } else {
+          setResult("Detected " + response.outputs[0].data.concepts[0].name);
+          setLoading(false);
+        }
+        // console.log("identifyImage -> response", response);
       })
       .catch((err) => {
-        alert(err);
+        setResult("This item cannot be identified. Please try again.");
       });
   };
 
