@@ -1,8 +1,15 @@
 import React, { useState } from "react";
+
+//libraries
 import { Alert, Linking } from "react-native";
-import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as FileSystem from "expo-file-system";
+import * as ImagePicker from "expo-image-picker";
+import { Camera } from "expo-camera";
+
+//Components
+
+//Styles
 import { Spinner } from "native-base";
 import {
   DetectTextStyled,
@@ -17,7 +24,7 @@ import {
   GalleryIcon,
 } from "./styles";
 
-const Camera = () => {
+const Identification = () => {
   const [imageUrl, setImageUrl] = useState();
   const [result, setResult] = useState("");
   const [loading, setLoading] = useState(false);
@@ -83,17 +90,17 @@ const Camera = () => {
   };
 
   const takePicture = async () => {
-    const { cancelled, uri } = await ImagePicker.launchCameraAsync({
-      allowsEditing: false,
-    });
-    if (!cancelled) {
-      setImageUrl(uri);
-      const base64 = await FileSystem.readAsStringAsync(uri, {
-        encoding: "base64",
-      });
-      identifyImage(base64);
-      setLoading(true);
-    }
+    // const { cancelled, uri } = await ImagePicker.launchCameraAsync({
+    //   allowsEditing: false,
+    // });
+    // if (!cancelled) {
+    //   setImageUrl(uri);
+    //   const base64 = await FileSystem.readAsStringAsync(uri, {
+    //     encoding: "base64",
+    //   });
+    //   identifyImage(base64);
+    //   setLoading(true);
+    // }
   };
 
   const identifyImage = (imageData) => {
@@ -155,4 +162,4 @@ const Camera = () => {
   );
 };
 
-export default Camera;
+export default Identification;
