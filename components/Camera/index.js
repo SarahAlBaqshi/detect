@@ -20,6 +20,14 @@ import {
   DarkView,
 } from "./styles";
 
+// clean up imports
+
+// this component can definitely be cleaned up. It's doing too many things.
+// but at this point I'm not entirely sure how to do that
+// so I won't ask you to clean it up now
+// but keep in mind eventually this has to be split up into smaller files
+// somehow
+
 const Camera = () => {
   const [imageUrl, setImageUrl] = useState();
   const [result, setResult] = useState("");
@@ -32,11 +40,11 @@ const Camera = () => {
         Alert.alert(
           "Permission Request",
           "To use Detect to its fullest extent, please allow access to your photos."[
-            ({
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel",
-            },
+          ({
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
             { text: "OK", onPress: () => Linking.openSettings() })
           ],
           { cancelable: false }
@@ -54,11 +62,11 @@ const Camera = () => {
         Alert.alert(
           "Permission Request",
           "To use Detect to its fullest extent, please allow access to your camera."[
-            ({
-              text: "Cancel",
-              onPress: () => console.log("Cancel Pressed"),
-              style: "cancel",
-            },
+          ({
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel",
+          },
             { text: "OK", onPress: () => Linking.openSettings() })
           ],
           { cancelable: false }
@@ -100,6 +108,9 @@ const Camera = () => {
   };
 
   const identifyImage = (imageData) => {
+    // move this import to the top of the file
+    // and use the new syntax for importing
+    // not `require`
     const Clarifai = require("clarifai");
 
     // Instantiate a new Clarifai app by passing in your API key.
@@ -109,6 +120,7 @@ const Camera = () => {
 
     // Predict the contents of an image by passing in a URL.
     // await const response
+    // switch to using async/await here
     app.models
       .predict(Clarifai.FOOD_MODEL, imageData)
       .then((response) => {
@@ -126,6 +138,9 @@ const Camera = () => {
       <DarkView>
         <DetectTextStyled>Detect</DetectTextStyled>
 
+        {/* use ?? (or I think it's &&) instead of the ternary operator
+            since the else condition is just null
+        */}
         {imageUrl ? (
           <ImagePreviewStyled
             source={{ uri: imageUrl }}
@@ -135,8 +150,8 @@ const Camera = () => {
         {loading ? (
           <Spinner color="white" />
         ) : (
-          <ResultStyled>{result}</ResultStyled>
-        )}
+            <ResultStyled>{result}</ResultStyled>
+          )}
         <ImageButtonStyled onPress={selectPicture}>
           <ImageButtonTextStyled>Gallery</ImageButtonTextStyled>
         </ImageButtonStyled>
