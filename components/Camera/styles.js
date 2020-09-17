@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Button, Image, Text, View } from "native-base";
+import { Button, Icon, Image, Text, View } from "native-base";
 
 //TODO ASK TEAM ABOUT OPACITY
 
@@ -9,27 +9,44 @@ import { Button, Image, Text, View } from "native-base";
 // accent #588157
 // secondary #DAD7CD
 
+export const ButtonsRow = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const CameraIcon = styled(Icon)`
+  font-size: 50px;
+`;
+
+export const GalleryIcon = styled(Icon)`
+  font-size: 50px;
+`;
+
 export const ImageButtonStyled = styled(Button)`
-  background-color: #3a5a40e6;
-  margin: 20px;
-  width: 115px;
-  height: 50px;
+  background-color: #3a5a4059;
+  margin: 10px;
+  width: 130px;
+  height: 130px;
   justify-content: center;
   align-self: center;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: white 2px;
 `;
 
 export const ImageButtonTextStyled = styled(Text)`
-  font-weight: 600;
-  font-size: 20px;
+  font-weight: 800;
+  font-size: 15px;
   letter-spacing: 1px;
-  margin-right: auto;
-  margin-left: auto;
+  margin-top: 5px;
 `;
 
 export const DetectTextStyled = styled.Text`
   font-size: 70px;
-  color: #f9f1f1;
+  color: white;
   text-align: center;
   font-weight: 300;
   letter-spacing: 3px;
@@ -40,7 +57,7 @@ export const ImagePreviewStyled = styled.Image`
   border-radius: 10px;
   margin: 10px;
   align-self: center;
-  border: 5px #3a5a40 solid;
+  border: 5px white solid;
   margin-bottom: 20px;
 `;
 
@@ -50,7 +67,7 @@ export const ResultStyled = styled.Text`
   align-self: center;
   font-size: 25px;
   margin-bottom: 25px;
-  color: #dad7cd;
+  color: white;
   margin-top: 15px;
 `;
 
