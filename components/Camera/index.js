@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  Alert,
-  Linking,
-  ImageBackground,
-} from "react-native";
+import { Alert, Linking } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import * as Permissions from "expo-permissions";
 import * as FileSystem from "expo-file-system";
-import { Button, Spinner, View } from "native-base";
+import { Spinner } from "native-base";
 import {
   DetectTextStyled,
   ImageButtonStyled,
@@ -18,6 +12,9 @@ import {
   BackgroundImage,
   ImageButtonTextStyled,
   DarkView,
+  ButtonsRow,
+  CameraIcon,
+  GalleryIcon,
 } from "./styles";
 
 const Camera = () => {
@@ -137,12 +134,17 @@ const Camera = () => {
         ) : (
           <ResultStyled>{result}</ResultStyled>
         )}
-        <ImageButtonStyled onPress={selectPicture}>
-          <ImageButtonTextStyled>Gallery</ImageButtonTextStyled>
-        </ImageButtonStyled>
-        <ImageButtonStyled onPress={takePicture}>
-          <ImageButtonTextStyled>Camera</ImageButtonTextStyled>
-        </ImageButtonStyled>
+        <ButtonsRow>
+          <ImageButtonStyled onPress={selectPicture}>
+            <GalleryIcon name="image" type="Feather" />
+            <ImageButtonTextStyled>Gallery</ImageButtonTextStyled>
+          </ImageButtonStyled>
+
+          <ImageButtonStyled onPress={takePicture}>
+            <CameraIcon name="camera" type="Feather" />
+            <ImageButtonTextStyled>Camera</ImageButtonTextStyled>
+          </ImageButtonStyled>
+        </ButtonsRow>
       </DarkView>
     </BackgroundImage>
   );
