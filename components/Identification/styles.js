@@ -4,8 +4,8 @@ import { Button, Icon, Image, Text, View } from "native-base";
 
 //TODO ASK TEAM ABOUT OPACITY
 
-//TEMP THEME
-//main #3A5A40
+// TEMP THEME
+// main #3A5A40
 // accent #588157
 // secondary #DAD7CD
 
@@ -28,7 +28,8 @@ export const ImagePreviewStyled = styled.Image`
   border-radius: 10px;
   margin: 10px;
   align-self: center;
-  border: 5px white;
+  border-width: 5px;
+  border-color: white;
   margin-bottom: 20px;
 `;
 

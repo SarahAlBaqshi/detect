@@ -1,10 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
-//Styles
-import { View } from "native-base";
-import { StyleSheet } from "react-native";
-
-//Components
+// Components
 import Identification from "./components/Identification";
 
 export default function App() {

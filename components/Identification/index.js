@@ -3,12 +3,12 @@ import React, { useState } from "react";
 // Libraries
 import Clarifai from "clarifai";
 
-//Components
+// Components
 import CameraRoll from "../Buttons/CameraRoll";
 import Camera from "../Buttons/Camera";
 import CameraView from "../CameraView";
 
-//Styles
+// Styles
 import { Spinner } from "native-base";
 import {
   DetectTextStyled,
@@ -25,7 +25,6 @@ import {
 const Identification = () => {
   const [imageUrl, setImageUrl] = useState();
   const [result, setResult] = useState("");
-  const [liveResult, setLiveResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [live, setLive] = useState(false);
 
@@ -41,7 +40,6 @@ const Identification = () => {
           "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
         );
         setLoading(false);
-        // console.log("identifyImage -> response", response);
       } else {
         setResult("Detected " + res.outputs[0].data.concepts[0].name);
         setLoading(false);
@@ -65,15 +63,19 @@ const Identification = () => {
 
         {live && (
           <LiveScan>
-            <CameraView />
+            <CameraView
+              live={live}
+              setLoading={setLoading}
+              setLive={setLive}
+              setImageUrl={setImageUrl}
+              identifyImage={identifyImage}
+            />
           </LiveScan>
         )}
         {loading ? (
           <Spinner color="white" />
-        ) : live === false ? (
-          <ResultStyled>{result}</ResultStyled>
         ) : (
-          <ResultStyled>{liveResult}</ResultStyled>
+          live === false && <ResultStyled>{result}</ResultStyled>
         )}
         {live === false && (
           <ButtonsRow>
@@ -89,11 +91,13 @@ const Identification = () => {
             />
           </ButtonsRow>
         )}
-        <LiveScanButton onPress={() => setLive(!live)}>
-          <LiveScanButtonText>
-            {live ? "Stop Scanning" : "Scan Live!"}
-          </LiveScanButtonText>
-        </LiveScanButton>
+        {live === false && (
+          <LiveScanButton onPress={() => setLive(true)}>
+            <LiveScanButtonText>
+              {live ? "Stop Scanning" : "Scan Live!"}
+            </LiveScanButtonText>
+          </LiveScanButton>
+        )}
       </DarkView>
     </BackgroundImage>
   );

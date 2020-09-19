@@ -1,12 +1,12 @@
 import React from "react";
 
-//Libraries
+// Libraries
 import { Alert, Linking } from "react-native";
 import * as Permissions from "expo-permissions";
 import * as FileSystem from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
 
-//Styles
+// Styles
 import {
   ImageButtonStyled,
   ImageButtonTextStyled,
