@@ -30,3 +30,25 @@ export const ImageButtonTextStyled = styled(Text)`
   letter-spacing: 1px;
   margin-top: 5px;
 `;
+
+export const LiveScanButton = styled(Button)`
+  background-color: #3a5a4059;
+  margin: 10px;
+  width: 130px;
+  height: 65px;
+  justify-content: center;
+  align-self: center;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: blue 2px;
+`;
+
+export const LiveScanButtonText = styled(Text)`
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: yellow
+  text-align: center;
+`;
