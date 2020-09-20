@@ -9,7 +9,7 @@ import LiveScan from "../Buttons/LiveScan";
 import Camera from "../Buttons/Camera";
 
 // Components
-import CameraView from "../CameraView/CameraView";
+import CameraView from "../CameraView";
 
 // Styles
 import { Spinner } from "native-base";
@@ -55,6 +55,7 @@ const Identification = () => {
     }
   };
 
+  //TODO: LESS TERNARY OPERATORS
   return (
     <BackgroundImage source={require("../../assets/background.jpg")}>
       <DarkView>
@@ -76,7 +77,7 @@ const Identification = () => {
             identifyImage={identifyImage}
           />
         )}
-        {loading & (live === false) ? (
+        {loading && live === false ? (
           <Spinner color="white" />
         ) : (
           live === false && <ResultStyled>{result}</ResultStyled>

@@ -35,7 +35,7 @@ const CameraView = ({
       }, 2000);
     }
   };
-
+  //TODO: CLEAN THIS MESS
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
