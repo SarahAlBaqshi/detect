@@ -2,12 +2,14 @@ import React, { useState } from "react";
 
 // Libraries
 import Clarifai from "clarifai";
-// import { parseString } from "react-native-xml2js";
 import { parseString } from "react-native-xml2js";
 
-// Components
+// Buttons
 import CameraRoll from "../Buttons/CameraRoll";
+import LiveScan from "../Buttons/LiveScan";
 import Camera from "../Buttons/Camera";
+
+// Components
 import CameraView from "../CameraView";
 
 // Styles
@@ -19,20 +21,18 @@ import {
   BackgroundImage,
   DarkView,
   ButtonsRow,
-  LiveScan,
-  LiveScanButton,
-  LiveScanButtonText,
 } from "./styles";
 import { ScrollView } from "react-native";
 
 const Identification = () => {
   const [imageUrl, setImageUrl] = useState();
   const [result, setResult] = useState("");
+  const [liveResult, setLiveResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [live, setLive] = useState(false);
   const [nutrition, setNutrition] = useState("hello");
 
-  const identifyImage = async (imageData) => {
+  const identifyImage = async (imageData, isLive) => {
     const app = new Clarifai.App({
       apiKey: "0352be76758845c794f90c92cdbcac5d",
     });
@@ -58,25 +58,30 @@ const Identification = () => {
 
     try {
       const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
-      if (res.outputs[0].data.concepts[0].name === "beer") {
+      const detectedObject = res.outputs[0].data.concepts[0].name;
+      if (detectedObject === "beer") {
         setResult(
           "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
         );
-        setLoading(false);
+      } else if (isLive) {
+        setLiveResult("Detected " + detectedObject);
       } else {
-        setResult("Detected " + res.outputs[0].data.concepts[0].name);
+
+        setResult("Detected " + detectedObject);
         test =
           "http://api.wolframalpha.com/v2/query?input=" +
-          res.outputs[0].data.concepts[0].name +
+          detectedObject +
           "%20nutrition%20facts&appid=" +
           myWolframAppId;
-        setLoading(false);
+
       }
+      setLoading(false);
     } catch (error) {
       setResult("This item cannot be identified. Please try again.");
     }
   };
 
+  //TODO: LESS TERNARY OPERATORS
   return (
     <BackgroundImage source={require("../../assets/background.jpg")}>
       <DarkView>
@@ -90,17 +95,15 @@ const Identification = () => {
         )} */}
 
         {live && (
-          <LiveScan>
-            <CameraView
-              live={live}
-              setLoading={setLoading}
-              setLive={setLive}
-              setImageUrl={setImageUrl}
-              identifyImage={identifyImage}
-            />
-          </LiveScan>
+          <CameraView
+            loading={loading}
+            liveResult={liveResult}
+            setLoading={setLoading}
+            setLive={setLive}
+            identifyImage={identifyImage}
+          />
         )}
-        {loading ? (
+        {loading && live === false ? (
           <Spinner color="white" />
         ) : (
           live === false && <ResultStyled>{result}</ResultStyled>
@@ -122,13 +125,7 @@ const Identification = () => {
             />
           </ButtonsRow>
         )}
-        {live === false && (
-          <LiveScanButton onPress={() => setLive(true)}>
-            <LiveScanButtonText>
-              {live ? "Stop Scanning" : "Scan Live!"}
-            </LiveScanButtonText>
-          </LiveScanButton>
-        )}
+        {live === false && <LiveScan setLive={setLive} screen />}
       </DarkView>
     </BackgroundImage>
   );
