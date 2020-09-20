@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 // Libraries
 import Clarifai from "clarifai";
+import { parseString } from "react-native-xml2js";
 
 // Buttons
 import CameraRoll from "../Buttons/CameraRoll";
@@ -12,7 +13,7 @@ import Camera from "../Buttons/Camera";
 import CameraView from "../CameraView";
 
 // Styles
-import { Spinner } from "native-base";
+import { Spinner, Text } from "native-base";
 import {
   DetectTextStyled,
   ImagePreviewStyled,
@@ -21,6 +22,7 @@ import {
   DarkView,
   ButtonsRow,
 } from "./styles";
+import { ScrollView } from "react-native";
 
 const Identification = () => {
   const [imageUrl, setImageUrl] = useState();
@@ -28,11 +30,31 @@ const Identification = () => {
   const [liveResult, setLiveResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [live, setLive] = useState(false);
+  const [nutrition, setNutrition] = useState("hello");
 
   const identifyImage = async (imageData, isLive) => {
     const app = new Clarifai.App({
       apiKey: "0352be76758845c794f90c92cdbcac5d",
     });
+
+    let test = "";
+    const myWolframAppId = "425X9Q-JEJJ2Q5LJ6";
+
+    fetch(
+      "http://api.wolframalpha.com/v2/query?input=banana%20nutrition%20facts&appid=425X9Q-JEJJ2Q5LJ6"
+    )
+      .then((response) => response.text())
+      .then((response) => {
+        parseString(response, function (err, result) {
+          test = response;
+          parseString(test, function (err, result) {
+            setNutrition(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+          });
+        });
+      })
+      .catch((err) => {
+        console.log("fetch", err);
+      });
 
     try {
       const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
@@ -44,7 +66,14 @@ const Identification = () => {
       } else if (isLive) {
         setLiveResult("Detected " + detectedObject);
       } else {
+
         setResult("Detected " + detectedObject);
+        test =
+          "http://api.wolframalpha.com/v2/query?input=" +
+          detectedObject +
+          "%20nutrition%20facts&appid=" +
+          myWolframAppId;
+
       }
       setLoading(false);
     } catch (error) {
@@ -58,12 +87,12 @@ const Identification = () => {
       <DarkView>
         <DetectTextStyled>Detect</DetectTextStyled>
 
-        {imageUrl && live === false && (
+        {/* {imageUrl && live === false && (
           <ImagePreviewStyled
             source={{ uri: imageUrl }}
             style={{ width: 200, height: 200 }}
           />
-        )}
+        )} */}
 
         {live && (
           <CameraView
@@ -79,6 +108,9 @@ const Identification = () => {
         ) : (
           live === false && <ResultStyled>{result}</ResultStyled>
         )}
+        <ScrollView>
+          <ResultStyled>{nutrition}</ResultStyled>
+        </ScrollView>
         {live === false && (
           <ButtonsRow>
             <CameraRoll
