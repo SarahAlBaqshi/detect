@@ -3,10 +3,13 @@ import React, { useState } from "react";
 // Libraries
 import Clarifai from "clarifai";
 
-// Components
+// Buttons
 import CameraRoll from "../Buttons/CameraRoll";
+import LiveScan from "../Buttons/LiveScan";
 import Camera from "../Buttons/Camera";
-import CameraView from "../CameraView";
+
+// Components
+import CameraView from "../CameraView/CameraView";
 
 // Styles
 import { Spinner } from "native-base";
@@ -17,18 +20,16 @@ import {
   BackgroundImage,
   DarkView,
   ButtonsRow,
-  LiveScan,
-  LiveScanButton,
-  LiveScanButtonText,
 } from "./styles";
 
 const Identification = () => {
   const [imageUrl, setImageUrl] = useState();
   const [result, setResult] = useState("");
+  const [liveResult, setLiveResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [live, setLive] = useState(false);
 
-  const identifyImage = async (imageData) => {
+  const identifyImage = async (imageData, isLive) => {
     const app = new Clarifai.App({
       apiKey: "0352be76758845c794f90c92cdbcac5d",
     });
@@ -41,8 +42,13 @@ const Identification = () => {
         );
         setLoading(false);
       } else {
-        setResult("Detected " + res.outputs[0].data.concepts[0].name);
-        setLoading(false);
+        if (isLive === true) {
+          setLiveResult("Detected " + res.outputs[0].data.concepts[0].name);
+          setLoading(false);
+        } else {
+          setResult("Detected " + res.outputs[0].data.concepts[0].name);
+          setLoading(false);
+        }
       }
     } catch (error) {
       setResult("This item cannot be identified. Please try again.");
@@ -62,17 +68,15 @@ const Identification = () => {
         )}
 
         {live && (
-          <LiveScan>
-            <CameraView
-              live={live}
-              setLoading={setLoading}
-              setLive={setLive}
-              setImageUrl={setImageUrl}
-              identifyImage={identifyImage}
-            />
-          </LiveScan>
+          <CameraView
+            loading={loading}
+            liveResult={liveResult}
+            setLoading={setLoading}
+            setLive={setLive}
+            identifyImage={identifyImage}
+          />
         )}
-        {loading ? (
+        {loading & (live === false) ? (
           <Spinner color="white" />
         ) : (
           live === false && <ResultStyled>{result}</ResultStyled>
@@ -91,13 +95,7 @@ const Identification = () => {
             />
           </ButtonsRow>
         )}
-        {live === false && (
-          <LiveScanButton onPress={() => setLive(true)}>
-            <LiveScanButtonText>
-              {live ? "Stop Scanning" : "Scan Live!"}
-            </LiveScanButtonText>
-          </LiveScanButton>
-        )}
+        {live === false && <LiveScan setLive={setLive} screen />}
       </DarkView>
     </BackgroundImage>
   );
