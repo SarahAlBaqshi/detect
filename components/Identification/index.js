@@ -36,20 +36,17 @@ const Identification = () => {
 
     try {
       const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
-      if (res.outputs[0].data.concepts[0].name === "beer") {
+      const detectedObject = res.outputs[0].data.concepts[0].name;
+      if (detectedObject === "beer") {
         setResult(
           "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
         );
-        setLoading(false);
+      } else if (isLive) {
+        setLiveResult("Detected " + detectedObject);
       } else {
-        if (isLive === true) {
-          setLiveResult("Detected " + res.outputs[0].data.concepts[0].name);
-          setLoading(false);
-        } else {
-          setResult("Detected " + res.outputs[0].data.concepts[0].name);
-          setLoading(false);
-        }
+        setResult("Detected " + detectedObject);
       }
+      setLoading(false);
     } catch (error) {
       setResult("This item cannot be identified. Please try again.");
     }
