@@ -12,6 +12,8 @@ import { Text, View } from "react-native";
 import { Spinner } from "native-base";
 import { LiveScanScreen, ResultStyled } from "./styles";
 
+// rename file to index.js
+
 const CameraView = ({
   identifyImage,
   setLive,
@@ -43,6 +45,7 @@ const CameraView = ({
     })();
   }, []);
 
+  // How can you simplify/clean up these two if-statements?
   if (hasPermission === null) {
     return <View />;
   }
@@ -57,8 +60,8 @@ const CameraView = ({
       {loading ? (
         <Spinner color="white" />
       ) : (
-        <ResultStyled>{liveResult}</ResultStyled>
-      )}
+          <ResultStyled>{liveResult}</ResultStyled>
+        )}
       {liveResult !== "" && <LiveScan setLive={setLive} />}
     </>
   );

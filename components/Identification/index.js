@@ -36,9 +36,10 @@ const Identification = () => {
 
     try {
       const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
+      // what can you do to simplify this if-statement?
       if (res.outputs[0].data.concepts[0].name === "beer") {
         setResult(
-          "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
+          "This item cannot be identified. Please try again. Alcohol is 7ram😤😤" // 🤣🤣🤣🤣🤣🤣
         );
         setLoading(false);
       } else {
@@ -55,6 +56,7 @@ const Identification = () => {
     }
   };
 
+  // seriously find a way around abusing these conditions and ternary operators below.
   return (
     <BackgroundImage source={require("../../assets/background.jpg")}>
       <DarkView>
@@ -76,11 +78,12 @@ const Identification = () => {
             identifyImage={identifyImage}
           />
         )}
+        {/* shouldn't this be && instead of &? */}
         {loading & (live === false) ? (
           <Spinner color="white" />
         ) : (
-          live === false && <ResultStyled>{result}</ResultStyled>
-        )}
+            live === false && <ResultStyled>{result}</ResultStyled>
+          )}
         {live === false && (
           <ButtonsRow>
             <CameraRoll
