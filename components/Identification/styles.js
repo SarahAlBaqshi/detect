@@ -13,6 +13,9 @@ export const ButtonsRow = styled.View`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  position: absolute;
+  bottom: 120px;
+  align-self: center;
 `;
 
 export const DetectTextStyled = styled.Text`
@@ -21,6 +24,7 @@ export const DetectTextStyled = styled.Text`
   text-align: center;
   font-weight: 300;
   letter-spacing: 3px;
+  margin-top: 20px;
   margin-bottom: 30px;
 `;
 
@@ -47,18 +51,11 @@ export const ResultStyled = styled.Text`
 export const BackgroundImage = styled.ImageBackground`
   width: 100%;
   height: 100%;
-  justify-content: center;
-  flex: 1;
-  align-self: stretch;
   opacity: 0.9;
 `;
 
 export const DarkView = styled(View)`
-  flex: 1;
   background-color: "rgba(0,0,0, 0.40)";
   width: 100%;
   height: 100%;
-  justify-content: center;
-  flex: 1;
-  align-self: stretch;
 `;
