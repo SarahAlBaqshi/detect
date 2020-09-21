@@ -9,9 +9,15 @@ export const GalleryIcon = styled(Icon)`
 export const CameraIcon = styled(Icon)`
   font-size: 50px;
 `;
+export const RecordIcon = styled(Icon)`
+  font-size: 40px;
+  color: #9f0000;
+  margin: 0px;
+  padding-left: 5px;
+`;
 
 export const ImageButtonStyled = styled(Button)`
-  background-color: #3a5a4059;
+  background-color: #3a5a40bf;
   margin: 10px;
   width: 130px;
   height: 130px;
@@ -32,23 +38,24 @@ export const ImageButtonTextStyled = styled(Text)`
 `;
 
 export const LiveScanButton = styled(Button)`
-  background-color: #3a5a4059;
+  background-color: #3a5a40bf;
   margin: 10px;
-  width: 130px;
+  width: 150px;
   height: 65px;
-  justify-content: center;
   align-self: center;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  border: blue 2px;
+  border: white 2px;
+  position: absolute;
+  bottom: 30px;
 `;
 
 export const LiveScanButtonText = styled(Text)`
   font-weight: 800;
   font-size: 15px;
   letter-spacing: 1px;
-  color: yellow
-  text-align: center;
+  color: white;
+  align-self: flex-start;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: -8px;
 `;

@@ -1,13 +1,25 @@
 import React from "react";
 
-import { LiveScanButton, LiveScanButtonText } from "./styles";
+import {
+  LiveScanButton,
+  LiveScanButtonText,
+  RecordIcon,
+  ImageButtonTextStyled,
+} from "./styles";
+import { Row } from "native-base";
 
 const LiveScan = ({ setLive, screen }) => {
   return (
     <LiveScanButton onPress={() => setLive(!!screen)}>
-      <LiveScanButtonText>
-        {screen ? "Start Scanning!" : "Stop Scanning!"}
-      </LiveScanButtonText>
+      <Row>
+        <RecordIcon
+          name="record-circle-outline"
+          type="MaterialCommunityIcons"
+        />
+        <LiveScanButtonText>
+          {screen ? "Scan Live" : "Stop Scanning!"}
+        </LiveScanButtonText>
+      </Row>
     </LiveScanButton>
   );
 };
