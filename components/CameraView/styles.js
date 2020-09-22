@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { View } from "native-base";
+import { Spinner, View } from "native-base";
 
 export const LiveScanScreen = styled(View)`
   border-radius: 10px;
   align-self: center;
-  border: 5px blue;
-  width: 200px;
-  height: 200px;
+  border: 5px red;
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: 30%;
 `;
 
 export const ResultStyled = styled.Text`
@@ -18,4 +20,10 @@ export const ResultStyled = styled.Text`
   color: white;
   margin-top: 15px;
   text-align: center;
+`;
+
+export const SpinnerLoading = styled(Spinner)`
+  position: absolute;
+  align-self: center;
+  top: 70%;
 `;

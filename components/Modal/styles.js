@@ -9,7 +9,7 @@ export const CenteredView = styled.View`
 export const ModalView = styled.View`
   margin: 20px;
   background-color: white;
-  border-radius: 20;
+  border-radius: 20px;
   padding: 35px;
   align-items: center;
   height: 80%;
@@ -19,7 +19,7 @@ export const OpenButton = styled.TouchableHighlight`
   align-self: center;
   margin-top: 10px;
   background-color: #588157;
-  border-radius: 20;
+  border-radius: 20px;
   padding: 10px;
   margin-bottom: -15px;
 `;
