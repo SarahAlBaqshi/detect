@@ -1,8 +1,13 @@
 import React from "react";
 
-// Components
-import Identification from "./components/Identification";
+// Navigation
+import { NavigationContainer } from "@react-navigation/native";
+import RootNavigator from "./components/Navigation";
 
 export default function App() {
-  return <Identification />;
+  return (
+    <NavigationContainer>
+      <RootNavigator />
+    </NavigationContainer>
+  );
 }

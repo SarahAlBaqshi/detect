@@ -9,15 +9,15 @@ import LiveScan from "../Buttons/LiveScan";
 
 // Styles
 import { Text, View } from "react-native";
-import { Spinner } from "native-base";
-import { LiveScanScreen, ResultStyled } from "./styles";
+import { LiveScanScreen, SpinnerLoading } from "./styles";
 
 const CameraView = ({
   identifyImage,
-  setLive,
   setLoading,
-  liveResult,
   loading,
+  result,
+  setImageUrl,
+  setLive,
 }) => {
   const [hasPermission, setHasPermission] = useState(null);
 
@@ -27,6 +27,7 @@ const CameraView = ({
     if (cam.current) {
       setTimeout(async () => {
         const picture = await cam.current.takePictureAsync({ quality: 1 });
+        setImageUrl(picture.uri);
         const base64 = await FileSystem.readAsStringAsync(picture.uri, {
           encoding: "base64",
         });
@@ -54,12 +55,8 @@ const CameraView = ({
       <LiveScanScreen>
         <Camera style={{ flex: 1 }} ref={cam} onCameraReady={handleLiveScan} />
       </LiveScanScreen>
-      {loading ? (
-        <Spinner color="white" />
-      ) : (
-        <ResultStyled>{liveResult}</ResultStyled>
-      )}
-      {liveResult !== "" && <LiveScan setLive={setLive} />}
+      {loading && <SpinnerLoading color="white" />}
+      {result !== "" && loading === false && <LiveScan setLive={setLive} />}
     </>
   );
 };

@@ -1,11 +1,6 @@
 import React from "react";
 
-import {
-  LiveScanButton,
-  LiveScanButtonText,
-  RecordIcon,
-  ImageButtonTextStyled,
-} from "./styles";
+import { LiveScanButton, LiveScanButtonText, RecordIcon } from "./styles";
 import { Row } from "native-base";
 
 const LiveScan = ({ setLive, screen }) => {

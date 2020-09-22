@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Button, Icon, Image, Text, View } from "native-base";
+import { Spinner } from "native-base";
 
 //TODO ASK TEAM ABOUT OPACITY
 
@@ -54,8 +54,14 @@ export const BackgroundImage = styled.ImageBackground`
   opacity: 0.9;
 `;
 
-export const DarkView = styled(View)`
+export const DarkView = styled.View`
   background-color: "rgba(0,0,0, 0.40)";
   width: 100%;
   height: 100%;
+`;
+
+export const SpinnerLoading = styled(Spinner)`
+  position: absolute;
+  align-self: center;
+  top: 50%;
 `;
