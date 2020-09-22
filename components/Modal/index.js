@@ -25,6 +25,7 @@ const index = ({
   loading,
 }) => {
   return (
+    // REVIEW: inline styling??????????
     <View style={{ flex: 1 }}>
       <Modal
         animationType="slide"

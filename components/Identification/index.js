@@ -61,6 +61,7 @@ const Identification = () => {
     }
   };
 
+  // REVIEW: How about moving this to a store
   const fetchNutrition = async (detectedObject) => {
     try {
       setNutrition("");
@@ -94,7 +95,7 @@ const Identification = () => {
             loading={loading}
           />
         )}
-
+        {/* REVIEW: === false?? seriously?? I taught you better than this */}
         {imageUrl && live === false && openModal === false && (
           <TouchableOpacity onPress={() => setOpenModal(true)}>
             <ImagePreviewStyled
