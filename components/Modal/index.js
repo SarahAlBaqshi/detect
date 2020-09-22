@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react";
 
 // Libraries
 import Modal from "react-native-modal";
@@ -23,7 +24,18 @@ const index = ({
   imageUrl,
   setOpenModal,
   loading,
+  navigation,
+  route,
 }) => {
+  let labels;
+  let images;
+  let ingredients;
+  if (route.params) {
+    labels = route.params.labels;
+    images = route.params.images;
+    ingredients = route.params.ingredients;
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <Modal
@@ -53,6 +65,18 @@ const index = ({
             </ScrollView>
             <OpenButton
               onPress={() => {
+                navigation.navigate("Recipes", {
+                  labels: labels,
+                  images: images,
+                  ingredients: ingredients,
+                });
+                setOpenModal(!openModal);
+              }}
+            >
+              <OpenButtonText>Show Recipes</OpenButtonText>
+            </OpenButton>
+            <OpenButton
+              onPress={() => {
                 setOpenModal(!openModal);
               }}
             >
@@ -65,4 +89,4 @@ const index = ({
   );
 };
 
-export default index;
+export default observer(index);
