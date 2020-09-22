@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Axios from "axios";
 
 // Libraries
 import Clarifai from "clarifai";
@@ -14,7 +15,7 @@ import CameraView from "../CameraView";
 import Modal from "../Modal";
 
 // Styles
-import { Spinner } from "native-base";
+
 import { TouchableOpacity } from "react-native";
 import {
   DetectTextStyled,
@@ -22,12 +23,12 @@ import {
   BackgroundImage,
   DarkView,
   ButtonsRow,
+  SpinnerLoading,
 } from "./styles";
 
-const Identification = () => {
+const Identification = ({ navigation, route }) => {
   const [imageUrl, setImageUrl] = useState();
   const [result, setResult] = useState("");
-  const [liveResult, setLiveResult] = useState("");
   const [loading, setLoading] = useState(false);
   const [live, setLive] = useState(false);
   const [nutrition, setNutrition] = useState("");
@@ -45,13 +46,11 @@ const Identification = () => {
         setResult(
           "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
         );
-      } else if (isLive) {
-        setLiveResult("Detected " + detectedObject);
-        fetchNutrition(detectedObject);
       } else {
         setResult("Detected " + detectedObject);
-
         fetchNutrition(detectedObject);
+        getRecipes(detectedObject);
+        setLive(false);
       }
       setLoading(false);
       setOpenModal(true);
@@ -78,6 +77,23 @@ const Identification = () => {
     }
   };
 
+  const getRecipes = async (detectedObject) => {
+    const res = await Axios.get(
+      `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=0&to=5`
+    );
+    const FoundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
+    const FoundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
+    const FoundRecipesIngredients = res.data.hits.map((hit) =>
+      hit.recipe.ingredients.map((ingredient) => ingredient.text)
+    );
+
+    navigation.setParams({
+      labels: FoundRecipesLabels,
+      images: FoundRecipesImages,
+      ingredients: FoundRecipesIngredients,
+    });
+  };
+
   //TODO: LESS TERNARY OPERATORS
   return (
     <BackgroundImage source={require("../../assets/background.jpg")}>
@@ -92,6 +108,8 @@ const Identification = () => {
             openModal={openModal}
             setOpenModal={setOpenModal}
             loading={loading}
+            navigation={navigation}
+            route={route}
           />
         )}
 
@@ -104,18 +122,20 @@ const Identification = () => {
           </TouchableOpacity>
         )}
 
-        {live && (
+        {live && openModal === false && (
           <CameraView
             loading={loading}
-            liveResult={liveResult}
+            result={result}
             setLoading={setLoading}
+            loading={loading}
             setLive={setLive}
             identifyImage={identifyImage}
+            setImageUrl={setImageUrl}
           />
         )}
 
         {loading && live === false && openModal === false && (
-          <Spinner color="white" />
+          <SpinnerLoading color="white" />
         )}
 
         {live === false && openModal === false && (
