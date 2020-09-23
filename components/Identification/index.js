@@ -60,6 +60,7 @@ const Identification = ({ navigation, route }) => {
     }
   };
 
+  // REVIEW: How about moving this to a store
   const fetchNutrition = async (detectedObject) => {
     try {
       setNutrition("");
@@ -112,7 +113,7 @@ const Identification = ({ navigation, route }) => {
             route={route}
           />
         )}
-
+        {/* REVIEW: === false?? seriously?? I taught you better than this */}
         {imageUrl && live === false && openModal === false && (
           <TouchableOpacity onPress={() => setOpenModal(true)}>
             <ImagePreviewStyled
