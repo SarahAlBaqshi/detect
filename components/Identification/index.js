@@ -36,32 +36,6 @@ const Identification = ({ navigation, route }) => {
   const [nutrition, setNutrition] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
-  // const identifyImage = async (imageData, isLive) => {
-  //   const app = new Clarifai.App({
-  //     apiKey: "0352be76758845c794f90c92cdbcac5d",
-  //   });
-
-  //   try {
-  //     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
-  //     const detectedObject = res.outputs[0].data.concepts[0].name;
-  //     if (detectedObject === "beer") {
-  //       setResult(
-  //         "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
-  //       );
-  //     } else {
-  //       setResult("Detected " + detectedObject);
-  //       fetchNutrition(detectedObject, { setNutrition, setLoading });
-  //       getRecipes(detectedObject, { navigation });
-  //       setLive(false);
-  //     }
-  //     setLoading(false);
-  //     setOpenModal(true);
-  //     setLoading(true);
-  //   } catch (error) {
-  //     setResult("This item cannot be identified. Please try again.");
-  //   }
-  // };
-
   //TODO: LESS TERNARY OPERATORS
   return (
     <BackgroundImage source={require("../../assets/background.jpg")}>
