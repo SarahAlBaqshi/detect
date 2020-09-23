@@ -15,7 +15,9 @@ const Camera = ({
   identifyImage,
   setLive,
   setResult,
+  setNutrition,
   setOpenModal,
+  navigation,
 }) => {
   const getPermissionAsyncCamera = async () => {
     if (Platform.OS !== "web") {
@@ -47,7 +49,14 @@ const Camera = ({
       const base64 = await FileSystem.readAsStringAsync(uri, {
         encoding: "base64",
       });
-      identifyImage(base64, { setResult, setLoading, setLive, setOpenModal });
+      identifyImage(base64, {
+        setResult,
+        setLoading,
+        setLive,
+        setNutrition,
+        setOpenModal,
+        navigation,
+      });
       setLoading(true);
     }
   };

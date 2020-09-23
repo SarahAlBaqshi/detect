@@ -22,10 +22,11 @@ import {
   DarkView,
   ButtonsRow,
   SpinnerLoading,
+  ResultStyled,
 } from "./styles";
 
 // Utilities
-import { fetchNutrition, getRecipes, identifyImage } from "./utilities";
+import { identifyImage } from "./utilities";
 
 const Identification = ({ navigation, route }) => {
   const [imageUrl, setImageUrl] = useState();
@@ -34,32 +35,6 @@ const Identification = ({ navigation, route }) => {
   const [live, setLive] = useState(false);
   const [nutrition, setNutrition] = useState("");
   const [openModal, setOpenModal] = useState(false);
-
-  // const identifyImage = async (imageData, isLive) => {
-  //   const app = new Clarifai.App({
-  //     apiKey: "0352be76758845c794f90c92cdbcac5d",
-  //   });
-
-  //   try {
-  //     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
-  //     const detectedObject = res.outputs[0].data.concepts[0].name;
-  //     if (detectedObject === "beer") {
-  //       setResult(
-  //         "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
-  //       );
-  //     } else {
-  //       setResult("Detected " + detectedObject);
-  //       fetchNutrition(detectedObject, { setNutrition, setLoading });
-  //       getRecipes(detectedObject, { navigation });
-  //       setLive(false);
-  //     }
-  //     setLoading(false);
-  //     setOpenModal(true);
-  //     setLoading(true);
-  //   } catch (error) {
-  //     setResult("This item cannot be identified. Please try again.");
-  //   }
-  // };
 
   //TODO: LESS TERNARY OPERATORS
   return (
@@ -82,16 +57,12 @@ const Identification = ({ navigation, route }) => {
 
         {imageUrl && !live && !openModal && (
           <TouchableOpacity onPress={() => setOpenModal(true)}>
-            <ImagePreviewStyled
-              source={{ uri: imageUrl }}
-              style={{ width: 200, height: 200 }}
-            />
+            <ImagePreviewStyled source={{ uri: imageUrl }} />
           </TouchableOpacity>
         )}
 
         {live && !openModal && (
           <CameraView
-            loading={loading}
             result={result}
             setLoading={setLoading}
             loading={loading}
@@ -100,10 +71,16 @@ const Identification = ({ navigation, route }) => {
             setImageUrl={setImageUrl}
             setResult={setResult}
             setOpenModal={setOpenModal}
+            navigation={navigation}
+            setNutrition={setNutrition}
           />
         )}
 
-        {loading && !live && !openModal && <SpinnerLoading color="white" />}
+        {loading && !live && !openModal ? (
+          <SpinnerLoading color="white" />
+        ) : (
+          !openModal && <ResultStyled>{result}</ResultStyled>
+        )}
 
         {!live && !openModal && (
           <>
@@ -115,6 +92,8 @@ const Identification = ({ navigation, route }) => {
                 setLive={setLive}
                 setOpenModal={setOpenModal}
                 setResult={setResult}
+                setNutrition={setNutrition}
+                navigation={navigation}
               />
               <Camera
                 setImageUrl={setImageUrl}
@@ -123,6 +102,8 @@ const Identification = ({ navigation, route }) => {
                 setLive={setLive}
                 setOpenModal={setOpenModal}
                 setResult={setResult}
+                setNutrition={setNutrition}
+                navigation={navigation}
               />
             </ButtonsRow>
             <LiveScan setLive={setLive} screen />

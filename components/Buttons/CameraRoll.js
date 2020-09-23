@@ -20,6 +20,8 @@ const CameraRoll = ({
   setLive,
   setResult,
   setOpenModal,
+  setNutrition,
+  navigation,
 }) => {
   const getPermissionsCameraRoll = async () => {
     if (Platform.OS !== "web") {
@@ -55,7 +57,14 @@ const CameraRoll = ({
       const base64 = await FileSystem.readAsStringAsync(uri, {
         encoding: "base64",
       });
-      identifyImage(base64, { setResult, setLoading, setLive, setOpenModal });
+      identifyImage(base64, {
+        setResult,
+        setLoading,
+        setLive,
+        setOpenModal,
+        setNutrition,
+        navigation,
+      });
       setLoading(true);
     }
   };

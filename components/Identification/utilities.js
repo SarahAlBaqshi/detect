@@ -6,7 +6,7 @@ import Clarifai from "clarifai";
 
 export const identifyImage = async (
   imageData,
-  { setResult, setLoading, setLive, setOpenModal }
+  { setResult, setLoading, setLive, setOpenModal, setNutrition, navigation }
 ) => {
   const app = new Clarifai.App({
     apiKey: "0352be76758845c794f90c92cdbcac5d",
@@ -16,7 +16,6 @@ export const identifyImage = async (
     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
 
     const detectedObject = res.outputs[0].data.concepts[0].name;
-    console.log("detectedObject", detectedObject);
 
     if (detectedObject === "beer") {
       setResult(
@@ -24,13 +23,12 @@ export const identifyImage = async (
       );
     } else {
       setResult("Detected " + detectedObject);
-      console.log("1");
-      fetchNutrition(detectedObject);
-      console.log("2");
+
+      fetchNutrition(detectedObject, { setNutrition, setLoading });
+
       getRecipes(detectedObject, { navigation });
-      console.log("3");
+
       setLive(false);
-      console.log("4");
     }
     setLoading(false);
     setOpenModal(true);
@@ -42,8 +40,6 @@ export const identifyImage = async (
 
 export const fetchNutrition = async (
   detectedObject,
-  setNutrition,
-  setLoading,
   { setNutrition, setLoading }
 ) => {
   try {
@@ -71,7 +67,6 @@ export const getRecipes = async (detectedObject, { navigation }) => {
   const FoundRecipesIngredients = res.data.hits.map((hit) =>
     hit.recipe.ingredients.map((ingredient) => ingredient.text)
   );
-
   navigation.setParams({
     labels: FoundRecipesLabels,
     images: FoundRecipesImages,

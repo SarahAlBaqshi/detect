@@ -5,16 +5,20 @@ import { observer } from "mobx-react";
 import Modal from "react-native-modal";
 
 // Styles
-import { ImagePreviewStyled } from "../Identification/styles";
 import {
   CenteredView,
   ModalView,
   OpenButton,
   OpenButtonText,
   ModalText,
+  ShowRecipesButton,
+  ShowRecipesButtonText,
+  NutritionLabel,
+  DetectedObjectModalMaybeItsABananaText,
+  ImagePreviewStyled,
 } from "./styles";
 import { ScrollView, Alert, View } from "react-native";
-import { Spinner } from "native-base";
+import { Row, Spinner } from "native-base";
 
 const index = ({
   nutrition,
@@ -38,32 +42,24 @@ const index = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={openModal}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-        }}
-      >
+      <Modal animationType="slide" transparent={true} visible={openModal}>
         <CenteredView>
           <ModalView>
             <ScrollView>
               {imageUrl && live === false && (
-                <ImagePreviewStyled
-                  source={{ uri: imageUrl }}
-                  style={{ width: 150, height: 150 }}
-                />
+                <ImagePreviewStyled source={{ uri: imageUrl }} />
               )}
-              <ModalText>{result}</ModalText>
+              <DetectedObjectModalMaybeItsABananaText>
+                {result}
+              </DetectedObjectModalMaybeItsABananaText>
 
               {loading === true ? (
                 <Spinner color="green" />
               ) : (
-                <ModalText>{nutrition}</ModalText>
+                <NutritionLabel>{nutrition}</NutritionLabel>
               )}
             </ScrollView>
-            <OpenButton
+            <ShowRecipesButton
               onPress={() => {
                 navigation.navigate("Recipes", {
                   labels: labels,
@@ -72,9 +68,10 @@ const index = ({
                 });
                 setOpenModal(!openModal);
               }}
+              transparent
             >
-              <OpenButtonText>Show Recipes</OpenButtonText>
-            </OpenButton>
+              <ShowRecipesButtonText>Show Recipes</ShowRecipesButtonText>
+            </ShowRecipesButton>
             <OpenButton
               onPress={() => {
                 setOpenModal(!openModal);
