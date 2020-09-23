@@ -13,8 +13,6 @@ import CameraView from "../CameraView";
 import Modal from "../Modal";
 
 // Styles
-
-import { TouchableOpacity } from "react-native";
 import {
   DetectTextStyled,
   ImagePreviewStyled,
@@ -23,6 +21,11 @@ import {
   ButtonsRow,
   SpinnerLoading,
   ResultStyled,
+  PlaceholderTextStyled,
+  ImagePreviewTouchableOpacity,
+  ProfileImageButton,
+  IconWrapper,
+  IconStyled,
 } from "./styles";
 
 // Utilities
@@ -55,10 +58,23 @@ const Identification = ({ navigation, route }) => {
           />
         )}
 
-        {imageUrl && !live && !openModal && (
-          <TouchableOpacity onPress={() => setOpenModal(true)}>
+        {imageUrl && !live && !openModal ? (
+          <ProfileImageButton transparent onPress={() => setOpenModal(true)}>
             <ImagePreviewStyled source={{ uri: imageUrl }} />
-          </TouchableOpacity>
+
+            <IconWrapper>
+              <IconStyled
+                type="MaterialCommunityIcons"
+                name="fit-to-page-outline"
+              />
+            </IconWrapper>
+          </ProfileImageButton>
+        ) : (
+          !openModal && (
+            <PlaceholderTextStyled>
+              PLEASE ADD A PHOTO OR YOU WILL GET PUNISHED REALLY BAD
+            </PlaceholderTextStyled>
+          )
         )}
 
         {live && !openModal && (

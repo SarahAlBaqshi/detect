@@ -37,6 +37,8 @@ export const identifyImage = async (
     setResult("This item cannot be identified. Please try again.");
   }
 };
+//TODO CONDITIONS EVERYWHERE
+const pattern = /serving size (?<servingSize>\d+ [a-z]+ \(\d+ [µmk]?g\))?\ntotal calories (?<totalCalories>\d+)? \| fat calories (?<fatCalories>\d+)?\n% daily value\^\* \|.+\n total fat (?<totalFat>\d+ [µmk]?g)? \| (?<totalFatPercent>\d+)?%\n saturated fat (?<saturatedFat>\d+ [µmk]?g)? \| (?<saturatedFatPercent>\d+)?%\n trans fat (?<transFat>\d+ [µmk]?g)?\|.+\n cholesterol (?<cholesterol>\d+ [µmk]?g)? \| (?<cholesterolPercent>\d+)?%\n sodium (?<sodium>\d+ [µmk]?g)? \| (?<sodiumPercent>\d+)?%\n total carbohydrates (?<totalCarbohydrates>\d+ [µmk]?g)? \| (?<carbohydratesPercent>\d+)?%\n dietary fiber (?<dietaryFiber>\d+ [µmk]?g)? \| (?<dietaryFiberPercent>\d+)?%\n sugar (?<sugar>\d+ [µmk]?g)? \|.+\n protein (?<protein>\d+ [µmk]?g)? \| (?<proteinPercent>\d+)?%\n vitamin A (?<vitaminA>\d+)?% \| vitamin C (?<vitaminC>\d+)?% \n( calcium (?<calcium>\d+)?%)?( \| iron (?<iron>\d+)?%)?( \n vitamin E (?<vitaminE>\d+)?%)?( \| thiamin (?<thiamin>\d+)?%)?( \n riboflavin (?<riboflavin>\d+)?%)?( \| niacin (?<niacin>\d+)?%)?( \n vitamin B6 (?<vitaminB6>\d+)?%)?( \| folate (?<folate>\d+)?%)?( \n phosphorus (?<phosphorus>\d+)?%)?( \| magnesium (?<magnesium>\d+)?%)?( \n zinc (?<zinc>\d+)?%)?( \| )?/gi;
 
 export const fetchNutrition = async (
   detectedObject,
@@ -50,11 +52,21 @@ export const fetchNutrition = async (
       "%20nutrition%20facts&appid=425X9Q-JEJJ2Q5LJ6";
     const response = await fetch(detectedObjectUrl);
     parseString(await response.text(), function (err, result) {
-      setNutrition(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+      const m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+      console.log(
+        "result.queryresult.pod[1].subpod[0].img[0].$.alt",
+        result.queryresult.pod[1].subpod[0].img[0].$.alt
+      );
+      if (m !== null) {
+        setNutrition(m.groups);
+      } else {
+        setNutrition("Nutrition Failed");
+      }
     });
     setLoading(false);
   } catch (err) {
     console.log("fetch", err);
+    //TODO STYLE BORDER RED WITH ERRORS
   }
 };
 

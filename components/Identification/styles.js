@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Spinner } from "native-base";
+import { Button, Icon, Spinner } from "native-base";
 
 //TODO ASK TEAM ABOUT OPACITY
 
@@ -47,7 +47,7 @@ export const ResultStyled = styled.Text`
   font-size: 35px;
   margin-bottom: 25px;
   color: white;
-  margin-top: 15px;
+  margin-top: 35px;
   text-align: center;
   /* TODO NICE FONT FAMILY */
 `;
@@ -68,4 +68,41 @@ export const SpinnerLoading = styled(Spinner)`
   position: absolute;
   align-self: center;
   top: 50%;
+`;
+
+export const PlaceholderTextStyled = styled.Text`
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  font-weight: 300;
+  letter-spacing: 3px;
+  margin-top: 17.5%;
+  margin-bottom: 30px;
+`;
+
+export const ProfileImageButton = styled(Button)`
+  width: 200px;
+  height: 200px;
+  border-radius: 100px;
+  margin-top: 10px;
+  align-self: center;
+`;
+
+export const IconWrapper = styled.View`
+  background-color: green;
+  opacity: 0.85;
+  border-radius: 50px;
+  width: 55px;
+  height: 55px;
+  align-self: flex-end;
+  position: absolute;
+  bottom: -11%;
+  right: -9%;
+`;
+
+export const IconStyled = styled(Icon)`
+  font-size: 40px;
+  color: white;
+  margin: auto;
+  align-self: center;
 `;

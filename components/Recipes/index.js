@@ -5,8 +5,8 @@ import { observer } from "mobx-react";
 import RecipeItem from "./RecipeItem";
 
 // Styles
-import { View } from "native-base";
-
+import { Content, List, View } from "native-base";
+import { ScrollView } from "react-native";
 const Recipes = ({ navigation, route }) => {
   let labels;
   let images;
@@ -30,7 +30,15 @@ const Recipes = ({ navigation, route }) => {
     <RecipeItem recipe={recipe} key={recipe.label} />
   ));
 
-  return <View>{final}</View>;
+  return (
+    <ScrollView>
+      <Content>
+        <View>
+          <List>{final}</List>
+        </View>
+      </Content>
+    </ScrollView>
+  );
 };
 
 export default observer(Recipes);

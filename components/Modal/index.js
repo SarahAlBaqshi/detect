@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 
 // Libraries
 import Modal from "react-native-modal";
+import NutritionLabel from "./NutritionLabel";
 
 // Styles
 import {
@@ -10,14 +11,14 @@ import {
   ModalView,
   OpenButton,
   OpenButtonText,
-  ModalText,
+  // ModalText,
   ShowRecipesButton,
   ShowRecipesButtonText,
-  NutritionLabel,
+  // NutritionLabelStyled,
   DetectedObjectModalMaybeItsABananaText,
   ImagePreviewStyled,
 } from "./styles";
-import { ScrollView, Alert, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { Row, Spinner } from "native-base";
 
 const index = ({
@@ -56,7 +57,8 @@ const index = ({
               {loading === true ? (
                 <Spinner color="green" />
               ) : (
-                <NutritionLabel>{nutrition}</NutritionLabel>
+                // <NutritionLabel>{nutrition.servingSize}</NutritionLabel>
+                <NutritionLabel nutrition={nutrition} />
               )}
             </ScrollView>
             <ShowRecipesButton
@@ -70,6 +72,7 @@ const index = ({
               }}
               transparent
             >
+              {/* //TODO LOADING FOR THIS */}
               <ShowRecipesButtonText>Show Recipes</ShowRecipesButtonText>
             </ShowRecipesButton>
             <OpenButton
