@@ -9,7 +9,14 @@ import * as ImagePicker from "expo-image-picker";
 // Styles
 import { ImageButtonStyled, ImageButtonTextStyled, CameraIcon } from "./styles";
 
-const Camera = ({ setImageUrl, setLoading, identifyImage }) => {
+const Camera = ({
+  setImageUrl,
+  setLoading,
+  identifyImage,
+  setLive,
+  setResult,
+  setOpenModal,
+}) => {
   const getPermissionAsyncCamera = async () => {
     if (Platform.OS !== "web") {
       const { status } = await Permissions.askAsync(Permissions.CAMERA);
@@ -40,7 +47,7 @@ const Camera = ({ setImageUrl, setLoading, identifyImage }) => {
       const base64 = await FileSystem.readAsStringAsync(uri, {
         encoding: "base64",
       });
-      identifyImage(base64);
+      identifyImage(base64, { setResult, setLoading, setLive, setOpenModal });
       setLoading(true);
     }
   };
