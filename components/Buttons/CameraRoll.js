@@ -13,7 +13,14 @@ import {
   GalleryIcon,
 } from "./styles";
 
-const CameraRoll = ({ setImageUrl, setLoading, identifyImage }) => {
+const CameraRoll = ({
+  setImageUrl,
+  setLoading,
+  identifyImage,
+  setLive,
+  setResult,
+  setOpenModal,
+}) => {
   const getPermissionsCameraRoll = async () => {
     if (Platform.OS !== "web") {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
@@ -48,7 +55,7 @@ const CameraRoll = ({ setImageUrl, setLoading, identifyImage }) => {
       const base64 = await FileSystem.readAsStringAsync(uri, {
         encoding: "base64",
       });
-      identifyImage(base64);
+      identifyImage(base64, { setResult, setLoading, setLive, setOpenModal });
       setLoading(true);
     }
   };

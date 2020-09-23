@@ -18,6 +18,8 @@ const CameraView = ({
   result,
   setImageUrl,
   setLive,
+  setOpenModal,
+  setResult,
 }) => {
   const [hasPermission, setHasPermission] = useState(null);
 
@@ -31,7 +33,7 @@ const CameraView = ({
         const base64 = await FileSystem.readAsStringAsync(picture.uri, {
           encoding: "base64",
         });
-        identifyImage(base64, true);
+        identifyImage(base64, { setResult, setLoading, setLive, setOpenModal });
         setLoading(true);
       }, 2000);
     }
