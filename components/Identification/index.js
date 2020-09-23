@@ -22,10 +22,11 @@ import {
   DarkView,
   ButtonsRow,
   SpinnerLoading,
+  ResultStyled,
 } from "./styles";
 
 // Utilities
-import { fetchNutrition, getRecipes, identifyImage } from "./utilities";
+import { identifyImage } from "./utilities";
 
 const Identification = ({ navigation, route }) => {
   const [imageUrl, setImageUrl] = useState();
@@ -82,16 +83,12 @@ const Identification = ({ navigation, route }) => {
 
         {imageUrl && !live && !openModal && (
           <TouchableOpacity onPress={() => setOpenModal(true)}>
-            <ImagePreviewStyled
-              source={{ uri: imageUrl }}
-              style={{ width: 200, height: 200 }}
-            />
+            <ImagePreviewStyled source={{ uri: imageUrl }} />
           </TouchableOpacity>
         )}
 
         {live && !openModal && (
           <CameraView
-            loading={loading}
             result={result}
             setLoading={setLoading}
             loading={loading}
@@ -100,10 +97,16 @@ const Identification = ({ navigation, route }) => {
             setImageUrl={setImageUrl}
             setResult={setResult}
             setOpenModal={setOpenModal}
+            navigation={navigation}
+            setNutrition={setNutrition}
           />
         )}
 
-        {loading && !live && !openModal && <SpinnerLoading color="white" />}
+        {loading && !live && !openModal ? (
+          <SpinnerLoading color="white" />
+        ) : (
+          !openModal && <ResultStyled>{result}</ResultStyled>
+        )}
 
         {!live && !openModal && (
           <>
@@ -115,6 +118,8 @@ const Identification = ({ navigation, route }) => {
                 setLive={setLive}
                 setOpenModal={setOpenModal}
                 setResult={setResult}
+                setNutrition={setNutrition}
+                navigation={navigation}
               />
               <Camera
                 setImageUrl={setImageUrl}
@@ -123,6 +128,8 @@ const Identification = ({ navigation, route }) => {
                 setLive={setLive}
                 setOpenModal={setOpenModal}
                 setResult={setResult}
+                setNutrition={setNutrition}
+                navigation={navigation}
               />
             </ButtonsRow>
             <LiveScan setLive={setLive} screen />

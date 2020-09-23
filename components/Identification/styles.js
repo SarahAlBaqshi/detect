@@ -24,7 +24,7 @@ export const DetectTextStyled = styled.Text`
   text-align: center;
   font-weight: 300;
   letter-spacing: 3px;
-  margin-top: 20px;
+  margin-top: 17.5%;
   margin-bottom: 30px;
 `;
 
@@ -35,17 +35,21 @@ export const ImagePreviewStyled = styled.Image`
   border-width: 5px;
   border-color: white;
   margin-bottom: 20px;
+  margin-top: 40px;
+  width: 200px;
+  height: 200px;
 `;
 
 export const ResultStyled = styled.Text`
   font-weight: bold;
   margin: 5px;
   align-self: center;
-  font-size: 25px;
+  font-size: 35px;
   margin-bottom: 25px;
   color: white;
   margin-top: 15px;
   text-align: center;
+  /* TODO NICE FONT FAMILY */
 `;
 
 export const BackgroundImage = styled.ImageBackground`
