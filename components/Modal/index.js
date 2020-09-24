@@ -35,10 +35,12 @@ const index = ({
   let labels;
   let images;
   let ingredients;
+  let urls;
   if (route.params) {
     labels = route.params.labels;
     images = route.params.images;
     ingredients = route.params.ingredients;
+    urls = route.params.urls;
   }
 
   return (
@@ -67,6 +69,7 @@ const index = ({
                   labels: labels,
                   images: images,
                   ingredients: ingredients,
+                  urls: urls,
                 });
                 setOpenModal(!openModal);
               }}

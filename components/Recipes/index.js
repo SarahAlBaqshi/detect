@@ -5,16 +5,18 @@ import { observer } from "mobx-react";
 import RecipeItem from "./RecipeItem";
 
 // Styles
-import { Content, List, View } from "native-base";
+import { Content, List, View, Button, Text } from "native-base";
 import { ScrollView } from "react-native-gesture-handler";
 const Recipes = ({ navigation, route }) => {
   let labels;
   let images;
   let ingredients;
+  let urls;
   if (route.params) {
     labels = route.params.labels;
     images = route.params.images;
     ingredients = route.params.ingredients;
+    urls = route.params.urls;
   }
 
   let newObject = [];
@@ -23,6 +25,7 @@ const Recipes = ({ navigation, route }) => {
       label: labels[i],
       image: images[i],
       ingredient: ingredients[i],
+      url: urls[i],
     };
   }
 
@@ -35,6 +38,9 @@ const Recipes = ({ navigation, route }) => {
       <Content>
         <View>
           <List>{allRecipes}</List>
+          <Button>
+            <Text>hi</Text>
+          </Button>
         </View>
       </Content>
     </ScrollView>

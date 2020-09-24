@@ -68,16 +68,18 @@ export const fetchNutrition = async (
 
 export const getRecipes = async (detectedObject, { navigation }) => {
   const res = await Axios.get(
-    `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=0&to=5`
+    `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=0&to=5&health=alcohol-free`
   );
   const FoundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
   const FoundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
   const FoundRecipesIngredients = res.data.hits.map((hit) =>
     hit.recipe.ingredients.map((ingredient) => ingredient.text)
   );
+  const FoundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
   navigation.setParams({
     labels: FoundRecipesLabels,
     images: FoundRecipesImages,
     ingredients: FoundRecipesIngredients,
+    urls: FoundRecipesUrls,
   });
 };
