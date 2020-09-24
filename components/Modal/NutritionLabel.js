@@ -17,7 +17,6 @@ import {
 import { Grid, Col, Row } from "native-base";
 
 const NutritionLabel = ({ nutrition }) => {
-  console.log("NutritionLabel -> nutrition", nutrition);
   return (
     <>
       <PerformanceFactsView>

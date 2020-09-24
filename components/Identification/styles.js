@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import * as Device from "expo-device";
 import { Button, Icon, Spinner } from "native-base";
 
 //TODO ASK TEAM ABOUT OPACITY
@@ -28,16 +28,26 @@ export const DetectTextStyled = styled.Text`
   margin-bottom: 30px;
 `;
 
-export const ImagePreviewStyled = styled.Image`
+export const ImagePreviewStyledIphoneX = styled.Image`
   border-radius: 10px;
-  margin: 10px;
   align-self: center;
   border-width: 5px;
   border-color: white;
-  margin-bottom: 20px;
-  margin-top: 40px;
-  width: 200px;
-  height: 200px;
+  margin-bottom: 10%;
+  margin-top: 10%;
+  width: 100%;
+  height: 100%;
+`;
+
+export const ImagePreviewStyledIphone8 = styled.Image`
+  border-radius: 10px;
+  align-self: center;
+  border-width: 5px;
+  border-color: white;
+  margin-bottom: 30%;
+  margin-top: 1%;
+  width: 100%;
+  height: 100%;
 `;
 
 export const ResultStyled = styled.Text`
@@ -88,7 +98,7 @@ export const ProfileImageButton = styled(Button)`
   align-self: center;
 `;
 
-export const IconWrapper = styled.View`
+export const IconWrapperIphoneX = styled.View`
   background-color: green;
   opacity: 0.85;
   border-radius: 50px;
@@ -97,6 +107,18 @@ export const IconWrapper = styled.View`
   align-self: flex-end;
   position: absolute;
   bottom: -11%;
+  right: -9%;
+`;
+
+export const IconWrapperIphone8 = styled.View`
+  background-color: green;
+  opacity: 0.85;
+  border-radius: 50px;
+  width: 55px;
+  height: 55px;
+  align-self: flex-end;
+  position: absolute;
+  bottom: 5%;
   right: -9%;
 `;
 

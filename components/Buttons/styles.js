@@ -2,6 +2,33 @@ import styled from "styled-components";
 
 import { Button, Icon, Text } from "native-base";
 
+export const IconWrapper = styled.View`
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+
+export const GoBackIcon = styled(Icon)`
+  color: white;
+  font-size: 30px;
+  margin-left: 5px;
+  margin-top: auto;
+  margin-bottom: auto;
+`;
+
+export const GoBackIconDetailPage = styled(Icon)`
+  color: black;
+  font-size: 30px;
+  align-self: center;
+  margin-right: 3px;
+  margin-top: 3px;
+`;
+
 export const GalleryIcon = styled(Icon)`
   font-size: 50px;
 `;
