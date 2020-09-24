@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-// // Libraries
-// import Clarifai from "clarifai";
+// Libraries || something to detect the iphone generation which will help us to make responsive design
+import * as Device from "expo-device";
 
 // Buttons
 import CameraRoll from "../Buttons/CameraRoll";
@@ -15,16 +15,17 @@ import Modal from "../Modal";
 // Styles
 import {
   DetectTextStyled,
-  ImagePreviewStyled,
+  ImagePreviewStyledIphoneX,
+  ImagePreviewStyledIphone8,
   BackgroundImage,
   DarkView,
   ButtonsRow,
   SpinnerLoading,
   ResultStyled,
   PlaceholderTextStyled,
-  ImagePreviewTouchableOpacity,
   ProfileImageButton,
-  IconWrapper,
+  IconWrapperIphoneX,
+  IconWrapperIphone8,
   IconStyled,
 } from "./styles";
 
@@ -60,20 +61,31 @@ const Identification = ({ navigation, route }) => {
 
         {imageUrl && !live && !openModal ? (
           <ProfileImageButton transparent onPress={() => setOpenModal(true)}>
-            <ImagePreviewStyled source={{ uri: imageUrl }} />
-
-            <IconWrapper>
-              <IconStyled
-                type="MaterialCommunityIcons"
-                name="fit-to-page-outline"
-              />
-            </IconWrapper>
+            {Device.modelName === "iPhone X" ? (
+              <>
+                <ImagePreviewStyledIphoneX source={{ uri: imageUrl }} />
+                <IconWrapperIphoneX>
+                  <IconStyled
+                    type="MaterialCommunityIcons"
+                    name="fit-to-page-outline"
+                  />
+                </IconWrapperIphoneX>
+              </>
+            ) : (
+              <>
+                <ImagePreviewStyledIphone8 source={{ uri: imageUrl }} />
+                <IconWrapperIphone8>
+                  <IconStyled
+                    type="MaterialCommunityIcons"
+                    name="fit-to-page-outline"
+                  />
+                </IconWrapperIphone8>
+              </>
+            )}
           </ProfileImageButton>
         ) : (
           !openModal && (
-            <PlaceholderTextStyled>
-              PLEASE ADD A PHOTO OR YOU WILL GET PUNISHED REALLY BAD
-            </PlaceholderTextStyled>
+            <PlaceholderTextStyled>PLEASE ADD A PHOTO</PlaceholderTextStyled>
           )
         )}
 
@@ -95,7 +107,10 @@ const Identification = ({ navigation, route }) => {
         {loading && !live && !openModal ? (
           <SpinnerLoading color="white" />
         ) : (
-          !openModal && <ResultStyled>{result}</ResultStyled>
+          !openModal &&
+          Device.modelName === "iPhone X" && (
+            <ResultStyled>{result}</ResultStyled>
+          )
         )}
 
         {!live && !openModal && (

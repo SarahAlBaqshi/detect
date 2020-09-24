@@ -53,10 +53,6 @@ export const fetchNutrition = async (
     const response = await fetch(detectedObjectUrl);
     parseString(await response.text(), function (err, result) {
       const m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
-      console.log(
-        "result.queryresult.pod[1].subpod[0].img[0].$.alt",
-        result.queryresult.pod[1].subpod[0].img[0].$.alt
-      );
       if (m !== null) {
         setNutrition(m.groups);
       } else {

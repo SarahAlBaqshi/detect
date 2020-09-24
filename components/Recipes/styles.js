@@ -1,35 +1,26 @@
-import { Button, Row } from "native-base";
 import styled from "styled-components";
-
-export const ListItem = styled.View`
-  background-color: red;
-  width: 100%;
-  height: auto;
-  border: black solid 2px;
-`;
+import { Button } from "native-base";
 
 export const RecipeImage = styled.Image`
-  width: 75%;
+  width: 100%;
   height: 200px;
   align-self: center;
-  border: 5px green;
-  border-radius: 20px;
-  margin-top: 10px;
 `;
 
 export const RecipeLabel = styled.Text`
-  font-weight: bold;
-  text-align: center;
-  font-size: 20px;
-  margin-left: 50px;
+  font-weight: 300;
+  font-size: 30px;
+  padding-top: 15px;
+  padding-bottom: 30px;
+  margin-left: 15px;
+  width: 90%;
+  letter-spacing: 2px;
 `;
 
-export const RecipeRow = styled(Row)`
-  align-items: center;
-`;
-
-export const ViewButtonStyled = styled.Text`
-  color: #588157;
-  font-weight: bold;
-  margin-left: 70px;
+export const ButtonStyled = styled(Button)`
+  background-color: #588157;
+  padding: 0px 20px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  margin-left: 15px;
 `;

@@ -6,7 +6,7 @@ import RecipeItem from "./RecipeItem";
 
 // Styles
 import { Content, List, View } from "native-base";
-import { ScrollView } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 const Recipes = ({ navigation, route }) => {
   let labels;
   let images;
@@ -26,15 +26,15 @@ const Recipes = ({ navigation, route }) => {
     };
   }
 
-  const final = newObject.map((recipe) => (
-    <RecipeItem recipe={recipe} key={recipe.label} />
+  const allRecipes = newObject.map((recipe) => (
+    <RecipeItem navigation={navigation} recipe={recipe} key={recipe.label} />
   ));
 
   return (
     <ScrollView>
       <Content>
         <View>
-          <List>{final}</List>
+          <List>{allRecipes}</List>
         </View>
       </Content>
     </ScrollView>

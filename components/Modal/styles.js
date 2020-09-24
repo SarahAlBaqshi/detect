@@ -77,7 +77,7 @@ export const PerformanceFactsView = styled(View)`
 `;
 export const PerformanceFactsTitle = styled.Text`
   font-weight: bold;
-  font-size: 20;
+  font-size: 20px;
   margin-left: 2px;
 `;
 
