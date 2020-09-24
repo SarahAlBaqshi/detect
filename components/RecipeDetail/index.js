@@ -36,13 +36,6 @@ const RecipeDetail = ({ route }) => {
       <ButtonStyled onPress={() => Linking.openURL(recipe.url)}>
         <Text>View Entire Recipe</Text>
       </ButtonStyled>
-      <Button transparent>
-        <Icon
-          type="Ionicons"
-          name="ios-heart-empty"
-          style={{ color: "red", fontSize: 20 }}
-        />
-      </Button>
     </StyledScrollView>
   );
 };
