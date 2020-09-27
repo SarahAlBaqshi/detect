@@ -8,6 +8,7 @@ import RecipeItem from "./RecipeItem";
 import { Content, List, View, Button, Text } from "native-base";
 import { ScrollView } from "react-native-gesture-handler";
 const RecipesList = ({ navigation, route }) => {
+  console.log("RecipesList -> route", route);
   let labels;
   let images;
   let ingredients;
@@ -26,6 +27,7 @@ const RecipesList = ({ navigation, route }) => {
       image: images[i],
       ingredient: ingredients[i],
       url: urls[i],
+      // calories: calories[]
     };
   }
 

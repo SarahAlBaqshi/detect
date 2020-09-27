@@ -1,11 +1,26 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { RecipeImage, RecipeLabel, ButtonStyled, OpenIcon } from "./styles";
+import { Card, Row, Text } from "native-base";
+import { TouchableOpacity } from "react-native-gesture-handler";
+// TODO swipeout
 
-const BookmarkedRecipeItem = () => {
+const BookmarkedRecipeItem = ({ recipe, navigation }) => {
   return (
-    <View>
-      <Text>hi</Text>
-    </View>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Recipe Detail", { recipe: recipe })}
+    >
+      <Card>
+        <RecipeImage alt={recipe.label} source={{ uri: recipe.image }} />
+        <Row>
+          <RecipeLabel>
+            {recipe.label.toLowerCase().includes("recipe")
+              ? recipe.label
+              : recipe.label + " Recipe"}
+          </RecipeLabel>
+          <OpenIcon type="Entypo" name="chevron-thin-right" />
+        </Row>
+      </Card>
+    </TouchableOpacity>
   );
 };
 

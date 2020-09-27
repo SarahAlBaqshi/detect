@@ -54,11 +54,11 @@ export const NutritionLabelStyled = styled.Text`
 `;
 
 export const DetectedObjectModalMaybeItsABananaText = styled.Text`
-  margin-bottom: 15px;
   text-align: center;
   font-weight: bold;
   font-size: 25px;
   color: black;
+  margin-bottom: 15px;
 `;
 
 export const ImagePreviewStyled = styled.Image`
@@ -141,4 +141,9 @@ export const CalorieValues = styled.Text`
 
 export const LoadingNutrition = styled.Text`
   margin-bottom: 30px;
+`;
+export const NotThisIngredient = styled.Text`
+  align-self: center;
+  color: red;
+  margin-top: 20px;
 `;

@@ -18,6 +18,7 @@ import {
   DetectedObjectModalMaybeItsABananaText,
   ImagePreviewStyled,
   LoadingNutrition,
+  NotThisIngredient,
 } from "./styles";
 import { ScrollView, View } from "react-native";
 import { Row, Spinner, Text } from "native-base";
@@ -56,8 +57,8 @@ const index = ({
               <DetectedObjectModalMaybeItsABananaText>
                 {result}
               </DetectedObjectModalMaybeItsABananaText>
-
-              {loading === true ? (
+              {/* <NotThisIngredient>Not this Ingredient?</NotThisIngredient> */}
+              {loading ? (
                 <>
                   <Spinner color="green" />
                   <LoadingNutrition>
@@ -66,24 +67,28 @@ const index = ({
                 </>
               ) : (
                 // <NutritionLabel>{nutrition.servingSize}</NutritionLabel>
-                <NutritionLabel nutrition={nutrition} />
+                <>
+                  <NutritionLabel nutrition={nutrition} />
+                  <NotThisIngredient>Not this Ingredient?</NotThisIngredient>
+                </>
               )}
             </ScrollView>
-            <ShowRecipesButton
-              onPress={() => {
-                navigation.navigate("RecipesList", {
-                  labels: labels,
-                  images: images,
-                  ingredients: ingredients,
-                  urls: urls,
-                });
-                setOpenModal(!openModal);
-              }}
-              transparent
-            >
-              {/* //TODO LOADING FOR THIS */}
-              <ShowRecipesButtonText>Show Recipes</ShowRecipesButtonText>
-            </ShowRecipesButton>
+            {!loading && (
+              <ShowRecipesButton
+                onPress={() => {
+                  navigation.navigate("RecipesList", {
+                    labels: labels,
+                    images: images,
+                    ingredients: ingredients,
+                    urls: urls,
+                  });
+                  setOpenModal(!openModal);
+                }}
+                transparent
+              >
+                <ShowRecipesButtonText>Show Recipes</ShowRecipesButtonText>
+              </ShowRecipesButton>
+            )}
             <OpenButton
               onPress={() => {
                 setOpenModal(!openModal);
