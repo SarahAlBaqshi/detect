@@ -12,7 +12,7 @@ import {
   StyledView,
 } from "./styles";
 import { Linking, Alert } from "react-native";
-import { ButtonStyled } from "../Recipes/styles";
+import { ButtonStyled } from "../RecipesList/styles";
 
 const RecipeDetail = ({ route }) => {
   const { recipe } = route.params;

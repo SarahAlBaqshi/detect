@@ -20,6 +20,7 @@ import {
   BackgroundImage,
   DarkView,
   ButtonsRow,
+  ScanningTextStyled,
   SpinnerLoading,
   ResultStyled,
   PlaceholderTextStyled,
@@ -27,10 +28,13 @@ import {
   IconWrapperIphoneX,
   IconWrapperIphone8,
   IconStyled,
+  BottomButtonsRow,
 } from "./styles";
 
 // Utilities
 import { identifyImage } from "./utilities";
+import { Row, Text } from "native-base";
+import RecipesButton from "../Buttons/RecipesButton";
 
 const Identification = ({ navigation, route }) => {
   const [imageUrl, setImageUrl] = useState();
@@ -39,8 +43,8 @@ const Identification = ({ navigation, route }) => {
   const [live, setLive] = useState(false);
   const [nutrition, setNutrition] = useState("");
   const [openModal, setOpenModal] = useState(false);
-
-  //TODO: LESS TERNARY OPERATORS
+  // Detect any ingredients
+  // TODO: LESS TERNARY OPERATORS
   return (
     <BackgroundImage source={require("../../assets/background.jpg")}>
       <DarkView>
@@ -84,7 +88,8 @@ const Identification = ({ navigation, route }) => {
             )}
           </ProfileImageButton>
         ) : (
-          !openModal && (
+          !openModal &&
+          !live && (
             <PlaceholderTextStyled>PLEASE ADD A PHOTO</PlaceholderTextStyled>
           )
         )}
@@ -105,10 +110,13 @@ const Identification = ({ navigation, route }) => {
         )}
 
         {loading && !live && !openModal ? (
-          <SpinnerLoading color="white" />
+          <>
+            <SpinnerLoading color="white" />
+            <ScanningTextStyled>Scanning Item</ScanningTextStyled>
+          </>
         ) : (
           !openModal &&
-          Device.modelName === "iPhone X" && (
+          Device.modelName === "iPhone 11 Pro Max" && (
             <ResultStyled>{result}</ResultStyled>
           )
         )}
@@ -137,7 +145,10 @@ const Identification = ({ navigation, route }) => {
                 navigation={navigation}
               />
             </ButtonsRow>
-            <LiveScan setLive={setLive} screen />
+            <BottomButtonsRow>
+              <LiveScan setLive={setLive} screen />
+              <RecipesButton screen navigation={navigation} />
+            </BottomButtonsRow>
           </>
         )}
       </DarkView>

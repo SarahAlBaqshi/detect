@@ -5,16 +5,18 @@ import { View } from "native-base";
 export const CenteredView = styled.View`
   justify-content: center;
   align-items: center;
-  margin-top: 22px;
+  align-self: center;
+  margin-top: 95px;
+  width: 95%;
+  height: 67%;
 `;
 
 export const ModalView = styled.View`
-  margin: 20px;
   background-color: white;
   border-radius: 20px;
   padding: 35px;
+  width: 100%;
   align-items: center;
-  height: 80%;
 `;
 
 export const OpenButton = styled(Button)`
@@ -135,4 +137,8 @@ export const CalorieValues = styled.Text`
   margin-left: 2px;
   margin-top: 5px;
   font-weight: bold;
+`;
+
+export const LoadingNutrition = styled.Text`
+  margin-bottom: 30px;
 `;

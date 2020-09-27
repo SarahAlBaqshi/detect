@@ -7,8 +7,9 @@ import GoBackButton from "../Buttons/GoBackButton";
 
 // Component
 import Identification from "../Identification";
-import Recipes from "../Recipes";
+import RecipesList from "../RecipesList";
 import RecipeDetail from "../RecipeDetail";
+import Recipes from "../Recipes";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -21,6 +22,16 @@ const RootNavigator = () => {
         options={{ headerShown: false }}
       />
       <Screen
+        name="RecipesList"
+        component={RecipesList}
+        options={{
+          headerStyle: { backgroundColor: "#3A5A40" },
+          headerTitleStyle: { color: "white", fontSize: 20 },
+          headerLeft: () => <GoBackButton />,
+        }}
+      />
+
+      <Screen
         name="Recipes"
         component={Recipes}
         options={{
@@ -29,6 +40,7 @@ const RootNavigator = () => {
           headerLeft: () => <GoBackButton />,
         }}
       />
+
       <Screen
         name="Recipe Detail"
         component={RecipeDetail}

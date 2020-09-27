@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import * as Device from "expo-device";
-import { Button, Icon, Spinner } from "native-base";
+import { Button, Icon, Row, Spinner } from "native-base";
 
 //TODO ASK TEAM ABOUT OPACITY
 
@@ -9,6 +9,14 @@ import { Button, Icon, Spinner } from "native-base";
 // accent #588157
 // secondary #DAD7CD
 
+export const ScanningTextStyled = styled.Text`
+  margin-bottom: 5px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 25px;
+  color: white;
+`;
+
 export const ButtonsRow = styled.View`
   display: flex;
   flex-direction: row;
@@ -16,6 +24,13 @@ export const ButtonsRow = styled.View`
   position: absolute;
   bottom: 120px;
   align-self: center;
+`;
+
+export const BottomButtonsRow = styled(Row)`
+  align-self: center;
+  position: absolute;
+  justify-content: center;
+  bottom: 30px;
 `;
 
 export const DetectTextStyled = styled.Text`
