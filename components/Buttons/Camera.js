@@ -40,28 +40,21 @@ const Camera = ({
   };
   getPermissionAsyncCamera();
 
-  const takePicture = async () => {
-    const { cancelled, uri } = await ImagePicker.launchCameraAsync({
-      allowsEditing: false,
-    });
-    if (!cancelled) {
-      setImageUrl(uri);
-      const base64 = await FileSystem.readAsStringAsync(uri, {
-        encoding: "base64",
-      });
-      identifyImage(base64, {
-        setResult,
-        setLoading,
-        setLive,
-        setNutrition,
-        setOpenModal,
-        navigation,
-      });
-      setLoading(true);
-    }
-  };
   return (
-    <ImageButtonStyled onPress={takePicture}>
+    <ImageButtonStyled
+      onPress={() =>
+        navigation.navigate("Camera View", {
+          setImageUrl: setImageUrl,
+          setLoading: setLoading,
+          identifyImage: identifyImage,
+          setLive: setLive,
+          setResult: setResult,
+          setNutrition: setNutrition,
+          setOpenModal: setOpenModal,
+          navigation: navigation,
+        })
+      }
+    >
       <CameraIcon name="camera" type="Feather" />
       <ImageButtonTextStyled>Camera</ImageButtonTextStyled>
     </ImageButtonStyled>

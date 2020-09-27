@@ -94,21 +94,6 @@ const Identification = ({ navigation, route }) => {
           )
         )}
 
-        {live && !openModal && (
-          <CameraView
-            result={result}
-            setLoading={setLoading}
-            loading={loading}
-            setLive={setLive}
-            identifyImage={identifyImage}
-            setImageUrl={setImageUrl}
-            setResult={setResult}
-            setOpenModal={setOpenModal}
-            navigation={navigation}
-            setNutrition={setNutrition}
-          />
-        )}
-
         {loading && !live && !openModal ? (
           <>
             <SpinnerLoading color="white" />
@@ -146,7 +131,6 @@ const Identification = ({ navigation, route }) => {
               />
             </ButtonsRow>
             <BottomButtonsRow>
-              <LiveScan setLive={setLive} screen />
               <RecipesButton screen navigation={navigation} />
             </BottomButtonsRow>
           </>
