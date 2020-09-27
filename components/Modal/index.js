@@ -17,9 +17,10 @@ import {
   // NutritionLabelStyled,
   DetectedObjectModalMaybeItsABananaText,
   ImagePreviewStyled,
+  LoadingNutrition,
 } from "./styles";
 import { ScrollView, View } from "react-native";
-import { Row, Spinner } from "native-base";
+import { Row, Spinner, Text } from "native-base";
 
 const index = ({
   nutrition,
@@ -57,7 +58,12 @@ const index = ({
               </DetectedObjectModalMaybeItsABananaText>
 
               {loading === true ? (
-                <Spinner color="green" />
+                <>
+                  <Spinner color="green" />
+                  <LoadingNutrition>
+                    Loading Nutritional Information
+                  </LoadingNutrition>
+                </>
               ) : (
                 // <NutritionLabel>{nutrition.servingSize}</NutritionLabel>
                 <NutritionLabel nutrition={nutrition} />
@@ -65,7 +71,7 @@ const index = ({
             </ScrollView>
             <ShowRecipesButton
               onPress={() => {
-                navigation.navigate("Recipes", {
+                navigation.navigate("RecipesList", {
                   labels: labels,
                   images: images,
                   ingredients: ingredients,

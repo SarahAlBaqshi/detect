@@ -72,8 +72,6 @@ export const LiveScanButton = styled(Button)`
   align-self: center;
   border-radius: 10px;
   border: white 2px;
-  position: absolute;
-  bottom: 30px;
 `;
 
 export const LiveScanButtonText = styled(Text)`
@@ -85,4 +83,32 @@ export const LiveScanButtonText = styled(Text)`
   margin-top: auto;
   margin-bottom: auto;
   margin-left: -8px;
+`;
+
+export const RecipesButtonStyled = styled(Button)`
+  background-color: #3a5a40bf;
+  margin: 10px;
+  width: 150px;
+  height: 65px;
+  align-self: center;
+  border-radius: 10px;
+  border: white 2px;
+`;
+
+export const RecipesButtonText = styled(Text)`
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  align-self: flex-start;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: -8px;
+`;
+
+export const RecipesIcon = styled(Icon)`
+  font-size: 40px;
+  color: yellow;
+  margin: 0px;
+  padding-left: 5px;
 `;
