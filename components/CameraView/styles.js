@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Spinner, View } from "native-base";
+import { Spinner, View, Icon } from "native-base";
 
 export const LiveScanScreen = styled(View)`
   border-radius: 10px;
@@ -26,4 +26,10 @@ export const SpinnerLoading = styled(Spinner)`
   position: absolute;
   align-self: center;
   top: 70%;
+`;
+
+export const FocusIcon = styled(Icon)`
+  align-self: center;
+  font-size: 350px;
+  color: white;
 `;
