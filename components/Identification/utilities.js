@@ -70,16 +70,43 @@ export const getRecipes = async (detectedObject, { navigation }) => {
   const res = await Axios.get(
     `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=0&to=5&health=alcohol-free`
   );
-  const FoundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
-  const FoundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
-  const FoundRecipesIngredients = res.data.hits.map((hit) =>
+  //TODO SETTINGS FOR FOOD PREFERENCES
+  const foundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
+  const foundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
+  const foundRecipesIngredients = res.data.hits.map((hit) =>
     hit.recipe.ingredients.map((ingredient) => ingredient.text)
   );
-  const FoundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
+  const foundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
+  const foundCalories = res.data.hits.map((hit) => hit.recipe.calories);
+  const foundDietLabels = res.data.hits.map((hit) => hit.recipe.dietLabels);
+  const foundCautions = res.data.hits.map((hit) => hit.recipe.cautions);
+  const foundHealthLabels = res.data.hits.map((hit) => hit.recipe.healthLabels);
+  const foundIngredientLines = res.data.hits.map(
+    (hit) => hit.recipe.ingredientLines
+  ); // TODO REPLACE INGREDIENTS with this
+  const foundSource = res.data.hits.map((hit) => hit.recipe.source);
+  const foundYield = res.data.hits.map((hit) => hit.recipe.yield);
+  const foundTotalTime = res.data.hits.map((hit) => hit.recipe.totalTime);
+  const foundTotalNutrients = res.data.hits.map(
+    (hit) => hit.recipe.totalNutrients
+  );
+  const foundTotalDaily = res.data.hits.map((hit) => hit.recipe.totalDaily);
+  const foundDigest = res.data.hits.map((hit) => hit.recipe.digest);
   navigation.setParams({
-    labels: FoundRecipesLabels,
-    images: FoundRecipesImages,
-    ingredients: FoundRecipesIngredients,
-    urls: FoundRecipesUrls,
+    labels: foundRecipesLabels,
+    images: foundRecipesImages,
+    ingredients: foundRecipesIngredients,
+    urls: foundRecipesUrls,
+    calories: foundCalories,
+    dietLabels: foundDietLabels,
+    cautions: foundCautions,
+    healthLabels: foundHealthLabels,
+    ingredientLines: foundIngredientLines,
+    source: foundSource,
+    yield: foundYield,
+    totalTime: foundTotalTime,
+    totalNutrients: foundTotalNutrients,
+    totalDaily: foundTotalDaily,
+    digest: foundDigest,
   });
 };
