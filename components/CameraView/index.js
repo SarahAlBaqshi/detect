@@ -1,161 +1,27 @@
-// import React, { useState, useEffect, useRef } from "react";
-
-// // Libraries
-// import { Camera } from "expo-camera";
-// import * as FileSystem from "expo-file-system";
-
-// // Buttons
-// import LiveScan from "../Buttons/LiveScan";
-
-// // Styles
-// import { Text, View } from "react-native";
-// import { LiveScanScreen, SpinnerLoading } from "./styles";
-// import { TouchableOpacity } from "react-native-gesture-handler";
-
-// const CameraView = ({
-//   identifyImage,
-//   setLoading,
-//   loading,
-//   result,
-//   setImageUrl,
-//   setLive,
-//   setOpenModal,
-//   setResult,
-//   setNutrition,
-//   navigation,
-// }) => {
-//   const [hasPermission, setHasPermission] = useState(null);
-
-//   const cam = useRef();
-
-// const handleLiveScan = () => {
-//   if (cam.current) {
-//     setTimeout(async () => {
-//       const picture = await cam.current.takePictureAsync({ quality: 1 });
-//       setImageUrl(picture.uri);
-//       const base64 = await FileSystem.readAsStringAsync(picture.uri, {
-//         encoding: "base64",
-//       });
-//       identifyImage(base64, {
-//         setResult,
-//         setLoading,
-//         setLive,
-//         setOpenModal,
-//         setNutrition,
-//         navigation,
-//       });
-//       setLoading(true);
-//     }, 2000);
-//   }
-// };
-//   //TODO: CLEAN THIS MESS
-//   useEffect(() => {
-//     (async () => {
-//       const { status } = await Camera.requestPermissionsAsync();
-//       setHasPermission(status === "granted");
-//     })();
-//   }, []);
-
-//   if (hasPermission === null) {
-//     return <View />;
-//   }
-//   if (hasPermission === false) {
-//     return <Text>No access to camera</Text>;
-//   }
-//   return (
-//     <>
-//       {/* <LiveScanScreen> */}
-//       <View>
-//         <Camera style={{ flex: 1 }}>
-//           <View
-//             style={{
-//               flex: 1,
-//               backgroundColor: "transparent",
-//               flexDirection: "row",
-//             }}
-//           >
-//             <TouchableOpacity
-//               style={{
-//                 flex: 0.1,
-//                 alignSelf: "flex-end",
-//                 alignItems: "center",
-//               }}
-//               onPress={() => {
-//                 setType(
-//                   type === Camera.Constants.Type.back
-//                     ? Camera.Constants.Type.front
-//                     : Camera.Constants.Type.back
-//                 );
-//               }}
-//             >
-//               <Text
-//                 style={{ fontSize: 18, marginBottom: 10, color: "white" }}
-//               ></Text>
-//             </TouchableOpacity>
-//           </View>
-//         </Camera>
-//       </View>
-//       {/* <Camera style={{ flex: 1 }} ref={cam} onCameraReady={handleLiveScan}>
-//         <Text>this is a test</Text>
-//       </Camera> */}
-//       {/* </LiveScanScreen> */}
-//       {loading && <SpinnerLoading color="white" />}
-//       {result !== "" && loading === false && <LiveScan setLive={setLive} />}
-//     </>
-//   );
-// };
-
-// export default CameraView;
-
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
-import LiveScan from "../Buttons/LiveScan";
-
-// Libraries
-
+import { Button } from "native-base";
 import * as FileSystem from "expo-file-system";
+import * as ImagePicker from "expo-image-picker";
+import { useRoute } from "@react-navigation/native";
 
-// Styles
-
-import { LiveScanScreen, SpinnerLoading } from "./styles";
-
-const CameraView = ({
-  identifyImage,
-  setLoading,
-  loading,
-  result,
-  setImageUrl,
-  setLive,
-  setOpenModal,
-  setResult,
-  setNutrition,
-  navigation,
-}) => {
-  const cam = useRef();
-  const handleLiveScan = () => {
-    if (cam.current) {
-      setTimeout(async () => {
-        const picture = await cam.current.takePictureAsync({ quality: 1 });
-        setImageUrl(picture.uri);
-        const base64 = await FileSystem.readAsStringAsync(picture.uri, {
-          encoding: "base64",
-        });
-        identifyImage(base64, {
-          setLoading,
-          setResult,
-          setLive,
-          setOpenModal,
-          setNutrition,
-          navigation,
-        });
-        setLoading(true);
-      }, 2000);
-    }
-  };
+const CameraView = ({ route }) => {
+  const {
+    setImageUrl,
+    setLoading,
+    identifyImage,
+    setLive,
+    setResult,
+    setNutrition,
+    setOpenModal,
+    navigation,
+  } = route.params;
+  console.log("route", route);
 
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
+  const ref = useRef(null);
 
   useEffect(() => {
     (async () => {
@@ -164,15 +30,40 @@ const CameraView = ({
     })();
   }, []);
 
+  const _takePhoto = async () => {
+    const photo = await ref.current.takePictureAsync();
+    console.debug(photo);
+    handleLiveScan(photo);
+  };
+
+  const handleLiveScan = async (photo) => {
+    console.log("handleLiveScan -> photo", photo.uri);
+
+    setImageUrl(photo.uri);
+    const base64 = await FileSystem.readAsStringAsync(photo.uri, {
+      encoding: "base64",
+    });
+    identifyImage(base64, {
+      setResult,
+      setLoading,
+      setLive,
+      setNutrition,
+      setOpenModal,
+      navigation,
+    });
+    setLoading(true);
+  };
+
   if (hasPermission === null) {
     return <View />;
   }
+
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
   return (
     <View style={{ flex: 1 }}>
-      <Camera style={{ flex: 1 }} type={type} ref={cam}>
+      <Camera style={{ flex: 1 }} type={type} ref={ref}>
         <View
           style={{
             flex: 1,
@@ -194,27 +85,19 @@ const CameraView = ({
               );
             }}
           >
-            <Text style={{ fontSize: 40, marginBottom: 10, color: "white" }}>
-              Flips
+            <Text style={{ fontSize: 18, marginBottom: 10, color: "white" }}>
+              Flip
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flex: 0.1,
-              alignSelf: "flex-end",
-              alignItems: "center",
-            }}
-            onPress={() => handleLiveScan()}
-          >
-            <Text style={{ fontSize: 18, marginBottom: 20, color: "white" }}>
-              test
+          <TouchableOpacity onPress={_takePhoto}>
+            <Text style={{ fontSize: 28, marginBottom: 10, color: "white" }}>
+              Snap Photo
             </Text>
           </TouchableOpacity>
-          {loading && <SpinnerLoading color="white" />}
-          {result !== "" && loading === false && <Text>{result}</Text>}
         </View>
       </Camera>
     </View>
   );
 };
+
 export default CameraView;
