@@ -17,7 +17,7 @@ const BookmarkedRecipeItem = ({ recipe, navigation }) => {
               ? recipe.label
               : recipe.label + " Recipe"}
           </RecipeLabel>
-          <OpenIcon type="Entypo" name="chevron-thin-right" />
+          <OpenIcon name="arrow-forward" />
         </Row>
       </Card>
     </TouchableOpacity>

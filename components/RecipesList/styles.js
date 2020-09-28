@@ -28,7 +28,9 @@ export const ButtonStyled = styled(Button)`
 export const OpenIcon = styled(Icon)`
   color: #588157;
   align-self: center;
-  font-size: 40px;
+  font-size: 47px;
+  margin-top: 1%;
+  margin-left: 2%;
 `;
 
 export const FavoritesButton = styled(Button)`

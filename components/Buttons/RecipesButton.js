@@ -7,7 +7,7 @@ const Recipes = ({ navigation }) => {
   return (
     <RecipesButtonStyled onPress={() => navigation.navigate("Recipes")}>
       <Row>
-        <RecipesIcon type="Feather" name="archive" />
+        <RecipesIcon type="AntDesign" name="book" />
         <RecipesButtonText>Recipes</RecipesButtonText>
       </Row>
     </RecipesButtonStyled>

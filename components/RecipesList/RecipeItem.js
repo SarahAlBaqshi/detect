@@ -19,7 +19,7 @@ const RecipeItem = ({ recipe, navigation }) => {
               ? recipe.label
               : recipe.label + " Recipe"}
           </RecipeLabel>
-          <OpenIcon type="Entypo" name="chevron-thin-right" />
+          <OpenIcon name="arrow-forward" />
         </Row>
         <Text>{recipe.calories}</Text>
       </Card>

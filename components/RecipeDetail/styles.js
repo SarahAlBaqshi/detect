@@ -1,3 +1,4 @@
+import { Button } from "native-base";
 import styled from "styled-components";
 
 export const StyledScrollView = styled.ScrollView`
@@ -39,4 +40,9 @@ export const RecipeIngredients = styled.Text`
 
 export const StyledView = styled.View`
   margin-bottom: 20px;
+`;
+
+export const BookmarkButton = styled(Button)`
+  margin-left: auto;
+  align-self: center;
 `;

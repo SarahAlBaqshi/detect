@@ -18,12 +18,14 @@ class BookmarkStore {
       (bookmark) => bookmark.label !== bookmarkedRecipeLabel
     );
     await AsyncStorage.setItem("myBookmarks", JSON.stringify(this.bookmarks));
-    // this.fetchBookmarks();
   };
 
   fetchBookmarks = async () => {
     const bookmarks = await AsyncStorage.getItem("myBookmarks");
     this.bookmarks = bookmarks ? JSON.parse(bookmarks) : [];
+    // await AsyncStorage.getAllKeys()
+    //   .then((keys) => AsyncStorage.multiRemove(keys))
+    //   .then(() => alert("success"));
   };
 }
 
