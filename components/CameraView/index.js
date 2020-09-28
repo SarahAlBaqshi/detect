@@ -15,7 +15,7 @@ const CameraView = ({ route }) => {
     setOpenModal,
     navigation,
   } = route.params;
-  console.log("route", route);
+  // console.log("route", route);
 
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);

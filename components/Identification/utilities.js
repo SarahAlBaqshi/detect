@@ -20,7 +20,7 @@ export const identifyImage = async (
     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
 
     detectedObject = res.outputs[0].data.concepts[0].name;
-    console.log("detectedObject", detectedObject);
+    // console.log("detectedObject in identifyImage", detectedObject);
 
     if (detectedObject === "beer") {
       setResult("This item cannot be identified. Please try again.");
@@ -130,22 +130,29 @@ export const getMoreRecipes = async ({
   navigation,
   route,
 }) => {
-  console.log("The object: " + detectedObject);
   setCounter({ x: counter.x + 5, y: counter.y + 5 });
-  const res = await Axios.get(
-    `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=${counter.x}&to=${counter.y}&health=alcohol-free`
-  );
 
-  const foundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
-  const foundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
-  const foundRecipesIngredients = res.data.hits.map((hit) =>
-    hit.recipe.ingredients.map((ingredient) => ingredient.text)
-  );
-  const foundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
+  if (counter.y <= 100) {
+    const res = await Axios.get(
+      `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=${counter.x}&to=${counter.y}&health=alcohol-free`
+    );
 
-  navigation.setParams({
-    labels: labels.push("this is a test"),
-  });
-  console.log("route.params", route.params);
-  // console.log("getMoreRecipes -> test", test);
+    const foundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
+    const foundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
+    const foundRecipesIngredients = res.data.hits.map((hit) =>
+      hit.recipe.ingredients.map((ingredient) => ingredient.text)
+    );
+    const foundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
+
+    const { params } = route;
+
+    navigation.setParams({
+      labels: params.labels.concat(foundRecipesLabels),
+      images: params.images.concat(foundRecipesImages),
+      ingredients: params.ingredients.concat(foundRecipesIngredients),
+      urls: params.urls.concat(foundRecipesUrls),
+    });
+  } else {
+    null;
+  }
 };
