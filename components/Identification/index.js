@@ -66,20 +66,14 @@ const Identification = ({ navigation, route }) => {
               <>
                 <ImagePreviewStyledIphoneX source={{ uri: imageUrl }} />
                 <IconWrapperIphoneX>
-                  <IconStyled
-                    type="MaterialCommunityIcons"
-                    name="fit-to-page-outline"
-                  />
+                  <IconStyled type="FontAwesome" name="expand" />
                 </IconWrapperIphoneX>
               </>
             ) : (
               <>
                 <ImagePreviewStyledIphone8 source={{ uri: imageUrl }} />
                 <IconWrapperIphone8>
-                  <IconStyled
-                    type="MaterialCommunityIcons"
-                    name="fit-to-page-outline"
-                  />
+                  <IconStyled type="FontAwesome" name="expand" />
                 </IconWrapperIphone8>
               </>
             )}
