@@ -5,11 +5,9 @@ import * as Device from "expo-device";
 
 // Buttons
 import CameraRoll from "../Buttons/CameraRoll";
-import LiveScan from "../Buttons/LiveScan";
 import Camera from "../Buttons/Camera";
 
 // Components
-import CameraView from "../CameraView";
 import Modal from "../Modal";
 
 // Styles
@@ -33,7 +31,6 @@ import {
 
 // Utilities
 import { identifyImage } from "./utilities";
-import { Row, Text } from "native-base";
 import RecipesButton from "../Buttons/RecipesButton";
 
 const Identification = ({ navigation, route }) => {
@@ -69,20 +66,14 @@ const Identification = ({ navigation, route }) => {
               <>
                 <ImagePreviewStyledIphoneX source={{ uri: imageUrl }} />
                 <IconWrapperIphoneX>
-                  <IconStyled
-                    type="MaterialCommunityIcons"
-                    name="fit-to-page-outline"
-                  />
+                  <IconStyled type="FontAwesome" name="expand" />
                 </IconWrapperIphoneX>
               </>
             ) : (
               <>
                 <ImagePreviewStyledIphone8 source={{ uri: imageUrl }} />
                 <IconWrapperIphone8>
-                  <IconStyled
-                    type="MaterialCommunityIcons"
-                    name="fit-to-page-outline"
-                  />
+                  <IconStyled type="FontAwesome" name="expand" />
                 </IconWrapperIphone8>
               </>
             )}
@@ -92,21 +83,6 @@ const Identification = ({ navigation, route }) => {
           !live && (
             <PlaceholderTextStyled>PLEASE ADD A PHOTO</PlaceholderTextStyled>
           )
-        )}
-
-        {live && !openModal && (
-          <CameraView
-            result={result}
-            setLoading={setLoading}
-            loading={loading}
-            setLive={setLive}
-            identifyImage={identifyImage}
-            setImageUrl={setImageUrl}
-            setResult={setResult}
-            setOpenModal={setOpenModal}
-            navigation={navigation}
-            setNutrition={setNutrition}
-          />
         )}
 
         {loading && !live && !openModal ? (
@@ -146,7 +122,6 @@ const Identification = ({ navigation, route }) => {
               />
             </ButtonsRow>
             <BottomButtonsRow>
-              <LiveScan setLive={setLive} screen />
               <RecipesButton screen navigation={navigation} />
             </BottomButtonsRow>
           </>

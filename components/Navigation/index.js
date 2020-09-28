@@ -10,6 +10,7 @@ import Identification from "../Identification";
 import RecipesList from "../RecipesList";
 import RecipeDetail from "../RecipeDetail";
 import Recipes from "../Recipes";
+import CameraView from "../CameraView";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -45,6 +46,18 @@ const RootNavigator = () => {
       <Screen
         name="Recipe Detail"
         component={RecipeDetail}
+        options={{
+          headerStyle: { backgroundColor: "#3A5A40" },
+          headerTitleStyle: { color: "white", fontSize: 20 },
+          headerLeft: () => <GoBackButton detailPage />,
+          headerTransparent: true,
+          headerTitle: false,
+        }}
+      />
+
+      <Screen
+        name="Camera View"
+        component={CameraView}
         options={{
           headerStyle: { backgroundColor: "#3A5A40" },
           headerTitleStyle: { color: "white", fontSize: 20 },

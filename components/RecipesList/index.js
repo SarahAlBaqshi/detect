@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 // Component
@@ -7,7 +7,12 @@ import RecipeItem from "./RecipeItem";
 // Styles
 import { Content, List, View, Button, Text } from "native-base";
 import { ScrollView } from "react-native-gesture-handler";
+import { getMoreRecipes } from "../Identification/utilities";
+
 const RecipesList = ({ navigation, route }) => {
+
+  const [counter, setCounter] = useState({ x: 5, y: 10 });
+
   let labels;
   let images;
   let ingredients;
@@ -41,8 +46,10 @@ const RecipesList = ({ navigation, route }) => {
     digest = route.params.digest;
   }
 
+  // console.log("RecipesList -> route.params", route.params);
+
   let newObject = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < route.params.labels.length; i++) {
     newObject[i] = {
       label: labels[i],
       image: images[i],
@@ -65,16 +72,25 @@ const RecipesList = ({ navigation, route }) => {
   const allRecipes = newObject.map((recipe) => (
     <RecipeItem navigation={navigation} recipe={recipe} key={recipe.label} />
   ));
+  const testLabels = labels.map((label) => <Text>{label}</Text>);
 
   return (
     //TODO SCROLLBAR AT TOP
-    <ScrollView>
+    <ScrollView
+      onMomentumScrollEnd={async () => {
+        await getMoreRecipes({ counter, setCounter, route, navigation });
+      }}
+    >
       <Content>
         <View>
           <List>{allRecipes}</List>
-          <Button>
-            <Text>Load more</Text>
-          </Button>
+          {/* <Button
+            onPress={() =>
+              getMoreRecipes({ counter, setCounter, route, navigation })
+            }
+          >
+            <Text>Load more </Text>
+          </Button> */}
         </View>
       </Content>
     </ScrollView>

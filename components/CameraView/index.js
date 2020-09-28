@@ -1,53 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
-
-// Libraries
+import { Text, View, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
 import * as FileSystem from "expo-file-system";
+import { FocusIcon } from "./styles";
 
-// Buttons
-import LiveScan from "../Buttons/LiveScan";
+const CameraView = ({ route }) => {
+  const {
+    setImageUrl,
+    setLoading,
+    identifyImage,
+    setLive,
+    setResult,
+    setNutrition,
+    setOpenModal,
+    navigation,
+  } = route.params;
+  // console.log("route", route);
 
-// Styles
-import { Text, View } from "react-native";
-import { LiveScanScreen, SpinnerLoading } from "./styles";
-
-const CameraView = ({
-  identifyImage,
-  setLoading,
-  loading,
-  result,
-  setImageUrl,
-  setLive,
-  setOpenModal,
-  setResult,
-  setNutrition,
-  navigation,
-}) => {
   const [hasPermission, setHasPermission] = useState(null);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const ref = useRef(null);
 
-  const cam = useRef();
-
-  const handleLiveScan = () => {
-    if (cam.current) {
-      setTimeout(async () => {
-        const picture = await cam.current.takePictureAsync({ quality: 1 });
-        setImageUrl(picture.uri);
-        const base64 = await FileSystem.readAsStringAsync(picture.uri, {
-          encoding: "base64",
-        });
-        identifyImage(base64, {
-          setResult,
-          setLoading,
-          setLive,
-          setOpenModal,
-          setNutrition,
-          navigation,
-        });
-        setLoading(true);
-      }, 2000);
-    }
-  };
-  //TODO: CLEAN THIS MESS
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestPermissionsAsync();
@@ -55,20 +28,71 @@ const CameraView = ({
     })();
   }, []);
 
+  const _takePhoto = async () => {
+    const photo = await ref.current.takePictureAsync();
+    console.debug(photo);
+    handleLiveScan(photo);
+  };
+
+  const handleLiveScan = async (photo) => {
+    navigation.goBack();
+
+    setImageUrl(photo.uri);
+    const base64 = await FileSystem.readAsStringAsync(photo.uri, {
+      encoding: "base64",
+    });
+    identifyImage(base64, {
+      setResult,
+      setLoading,
+      setLive,
+      setNutrition,
+      setOpenModal,
+      navigation,
+    });
+    setLoading(true);
+  };
+
   if (hasPermission === null) {
     return <View />;
   }
+
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
   return (
-    <>
-      <LiveScanScreen>
-        <Camera style={{ flex: 1 }} ref={cam} onCameraReady={handleLiveScan} />
-      </LiveScanScreen>
-      {loading && <SpinnerLoading color="white" />}
-      {result !== "" && loading === false && <LiveScan setLive={setLive} />}
-    </>
+    <View style={{ flex: 1 }}>
+      <Camera style={{ flex: 1 }} type={type} ref={ref}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "transparent",
+            flexDirection: "row",
+          }}
+        >
+          {/* <TouchableOpacity
+            style={{
+              flex: 0.1,
+              alignSelf: "flex-end",
+              alignItems: "center",
+            }}
+            onPress={() => {
+              setType(
+                type === Camera.Constants.Type.back
+                  ? Camera.Constants.Type.front
+                  : Camera.Constants.Type.back
+              );
+            }}
+          >
+            <Text style={{ fontSize: 18, marginBottom: 10, color: "white" }}>
+              Flip
+            </Text>
+          </TouchableOpacity> */}
+          <TouchableOpacity onPress={_takePhoto}>
+            <FocusIcon name="crop-free" type="MaterialCommunityIcons" />
+          </TouchableOpacity>
+        </View>
+      </Camera>
+    </View>
   );
 };
 
