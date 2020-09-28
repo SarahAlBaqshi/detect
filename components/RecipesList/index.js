@@ -10,7 +10,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { getMoreRecipes } from "../Identification/utilities";
 
 const RecipesList = ({ navigation, route }) => {
-  const [counter, setCounter] = useState({ x: 6, y: 10 });
+  const [counter, setCounter] = useState({ x: 5, y: 10 });
 
   let labels;
   let images;
@@ -23,10 +23,10 @@ const RecipesList = ({ navigation, route }) => {
     urls = route.params.urls;
   }
 
-  console.log("RecipesList -> route.params", route.params);
+  // console.log("RecipesList -> route.params", route.params);
 
   let newObject = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < route.params.labels.length; i++) {
     newObject[i] = {
       label: labels[i],
       image: images[i],
@@ -39,17 +39,24 @@ const RecipesList = ({ navigation, route }) => {
   const allRecipes = newObject.map((recipe) => (
     <RecipeItem navigation={navigation} recipe={recipe} key={recipe.label} />
   ));
+  const testLabels = labels.map((label) => <Text>{label}</Text>);
 
   return (
-    <ScrollView>
+    <ScrollView
+      onMomentumScrollEnd={async () => {
+        await getMoreRecipes({ counter, setCounter, route, navigation });
+      }}
+    >
       <Content>
         <View>
           <List>{allRecipes}</List>
-          <Button
-            onPress={() => getMoreRecipes({ counter, setCounter, route })}
+          {/* <Button
+            onPress={() =>
+              getMoreRecipes({ counter, setCounter, route, navigation })
+            }
           >
-            <Text>Load more</Text>
-          </Button>
+            <Text>Load more </Text>
+          </Button> */}
         </View>
       </Content>
     </ScrollView>
