@@ -1,28 +1,30 @@
 import React from "react";
-import { useNavigation } from "@react-navigation/native";
 
 // Styles
-import { GoBackIcon, GoBackIconDetailPage, IconWrapper } from "./styles";
+import {
+  GoBackIcon,
+  GoBackIconDetailPage,
+  IconWrapper,
+  BackWrapper,
+} from "./styles";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 const GoBackButton = ({ detailPage }) => {
   const navigation = useNavigation();
   if (!detailPage) {
     return (
-      <GoBackIcon
-        onPress={() => navigation.goBack()}
-        type="Entypo"
-        name="chevron-thin-left"
-      />
+      <BackWrapper onPress={() => navigation.goBack()}>
+        <GoBackIcon name="arrow-back" />
+      </BackWrapper>
     );
   } else {
     return (
-      <IconWrapper>
-        <GoBackIconDetailPage
-          onPress={() => navigation.goBack()}
-          type="Entypo"
-          name="chevron-thin-left"
-        />
-      </IconWrapper>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <IconWrapper>
+          <GoBackIconDetailPage name="arrow-back" />
+        </IconWrapper>
+      </TouchableOpacity>
     );
   }
 };

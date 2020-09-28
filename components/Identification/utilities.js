@@ -70,6 +70,8 @@ export const getRecipes = async (detectedObject, { navigation }) => {
   const res = await Axios.get(
     `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=0&to=5&health=alcohol-free`
   );
+  //TODO RECIPE LABELS TITLE CASE
+
   //TODO SETTINGS FOR FOOD PREFERENCES
   const foundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
   const foundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
@@ -103,7 +105,7 @@ export const getRecipes = async (detectedObject, { navigation }) => {
     healthLabels: foundHealthLabels,
     ingredientLines: foundIngredientLines,
     source: foundSource,
-    yield: foundYield,
+    servingYield: foundYield,
     totalTime: foundTotalTime,
     totalNutrients: foundTotalNutrients,
     totalDaily: foundTotalDaily,

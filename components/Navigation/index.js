@@ -35,6 +35,7 @@ const RootNavigator = () => {
         name="Recipes"
         component={Recipes}
         options={{
+          headerTitle: "Bookmarks",
           headerStyle: { backgroundColor: "#3A5A40" },
           headerTitleStyle: { color: "white", fontSize: 20 },
           headerLeft: () => <GoBackButton />,
