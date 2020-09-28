@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
-import { Button } from "native-base";
 import * as FileSystem from "expo-file-system";
-import * as ImagePicker from "expo-image-picker";
-import { useRoute } from "@react-navigation/native";
+import { FocusIcon } from "./styles";
 
 const CameraView = ({ route }) => {
   const {
@@ -37,7 +35,7 @@ const CameraView = ({ route }) => {
   };
 
   const handleLiveScan = async (photo) => {
-    console.log("handleLiveScan -> photo", photo.uri);
+    navigation.goBack();
 
     setImageUrl(photo.uri);
     const base64 = await FileSystem.readAsStringAsync(photo.uri, {
@@ -71,7 +69,7 @@ const CameraView = ({ route }) => {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               flex: 0.1,
               alignSelf: "flex-end",
@@ -88,11 +86,9 @@ const CameraView = ({ route }) => {
             <Text style={{ fontSize: 18, marginBottom: 10, color: "white" }}>
               Flip
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={_takePhoto}>
-            <Text style={{ fontSize: 28, marginBottom: 10, color: "white" }}>
-              Snap Photo
-            </Text>
+            <FocusIcon name="crop-free" type="MaterialCommunityIcons" />
           </TouchableOpacity>
         </View>
       </Camera>

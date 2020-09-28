@@ -21,7 +21,7 @@ import {
   NotThisIngredient,
 } from "./styles";
 import { ScrollView, View } from "react-native";
-import { Row, Spinner, Text } from "native-base";
+import { Row, Spinner, Text, Button } from "native-base";
 
 const index = ({
   nutrition,
@@ -69,7 +69,9 @@ const index = ({
                 // <NutritionLabel>{nutrition.servingSize}</NutritionLabel>
                 <>
                   <NutritionLabel nutrition={nutrition} />
-                  <NotThisIngredient>Not this Ingredient?</NotThisIngredient>
+                  <Button transparent>
+                    <NotThisIngredient>Not this Ingredient?</NotThisIngredient>
+                  </Button>
                 </>
               )}
             </ScrollView>

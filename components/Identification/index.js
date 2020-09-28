@@ -5,11 +5,9 @@ import * as Device from "expo-device";
 
 // Buttons
 import CameraRoll from "../Buttons/CameraRoll";
-import LiveScan from "../Buttons/LiveScan";
 import Camera from "../Buttons/Camera";
 
 // Components
-import CameraView from "../CameraView";
 import Modal from "../Modal";
 
 // Styles
@@ -33,7 +31,6 @@ import {
 
 // Utilities
 import { identifyImage } from "./utilities";
-import { Row, Text } from "native-base";
 import RecipesButton from "../Buttons/RecipesButton";
 
 const Identification = ({ navigation, route }) => {
