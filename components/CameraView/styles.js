@@ -29,6 +29,8 @@ export const SpinnerLoading = styled(Spinner)`
 `;
 
 export const FocusIcon = styled(Icon)`
+  margin: auto;
+  padding: 10px;
   align-self: center;
   font-size: 350px;
   color: white;

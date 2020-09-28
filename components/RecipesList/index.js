@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react";
 
 // Component
@@ -7,8 +7,11 @@ import RecipeItem from "./RecipeItem";
 // Styles
 import { Content, List, View, Button, Text } from "native-base";
 import { ScrollView } from "react-native-gesture-handler";
+import { getMoreRecipes } from "../Identification/utilities";
+
 const RecipesList = ({ navigation, route }) => {
-  console.log("RecipesList -> route", route);
+  const [counter, setCounter] = useState({ x: 6, y: 10 });
+
   let labels;
   let images;
   let ingredients;
@@ -19,6 +22,8 @@ const RecipesList = ({ navigation, route }) => {
     ingredients = route.params.ingredients;
     urls = route.params.urls;
   }
+
+  console.log("RecipesList -> route.params", route.params);
 
   let newObject = [];
   for (let i = 0; i < 5; i++) {
@@ -40,7 +45,9 @@ const RecipesList = ({ navigation, route }) => {
       <Content>
         <View>
           <List>{allRecipes}</List>
-          <Button>
+          <Button
+            onPress={() => getMoreRecipes({ counter, setCounter, route })}
+          >
             <Text>Load more</Text>
           </Button>
         </View>

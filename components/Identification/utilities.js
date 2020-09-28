@@ -4,6 +4,10 @@ import Axios from "axios";
 // Libraries
 import Clarifai from "clarifai";
 
+let res = [];
+
+let detectedObject;
+
 export const identifyImage = async (
   imageData,
   { setResult, setLoading, setLive, setOpenModal, setNutrition, navigation }
@@ -15,12 +19,11 @@ export const identifyImage = async (
   try {
     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
 
-    const detectedObject = res.outputs[0].data.concepts[0].name;
+    detectedObject = res.outputs[0].data.concepts[0].name;
+    console.log("detectedObject", detectedObject);
 
     if (detectedObject === "beer") {
-      setResult(
-        "This item cannot be identified. Please try again. Alcohol is 7ram😤😤"
-      );
+      setResult("This item cannot be identified. Please try again.");
     } else {
       setResult("Detected " + detectedObject);
 
@@ -37,6 +40,16 @@ export const identifyImage = async (
     setResult("This item cannot be identified. Please try again.");
   }
 };
+
+const wrongItem = (app) => {
+  app.inputs.create([
+    {
+      url:
+        "https://www.indoindians.com/wp-content/uploads/2015/09/coriander-plant-in-pot.jpg",
+    },
+  ]);
+};
+
 //TODO CONDITIONS EVERYWHERE
 const pattern = /serving size (?<servingSize>\d+ [a-z]+ \(\d+ [µmk]?g\))?\ntotal calories (?<totalCalories>\d+)? \| fat calories (?<fatCalories>\d+)?\n% daily value\^\* \|.+\n total fat (?<totalFat>\d+ [µmk]?g)? \| (?<totalFatPercent>\d+)?%\n saturated fat (?<saturatedFat>\d+ [µmk]?g)? \| (?<saturatedFatPercent>\d+)?%\n trans fat (?<transFat>\d+ [µmk]?g)?\|.+\n cholesterol (?<cholesterol>\d+ [µmk]?g)? \| (?<cholesterolPercent>\d+)?%\n sodium (?<sodium>\d+ [µmk]?g)? \| (?<sodiumPercent>\d+)?%\n total carbohydrates (?<totalCarbohydrates>\d+ [µmk]?g)? \| (?<carbohydratesPercent>\d+)?%\n dietary fiber (?<dietaryFiber>\d+ [µmk]?g)? \| (?<dietaryFiberPercent>\d+)?%\n sugar (?<sugar>\d+ [µmk]?g)? \|.+\n protein (?<protein>\d+ [µmk]?g)? \| (?<proteinPercent>\d+)?%\n vitamin A (?<vitaminA>\d+)?% \| vitamin C (?<vitaminC>\d+)?% \n( calcium (?<calcium>\d+)?%)?( \| iron (?<iron>\d+)?%)?( \n vitamin E (?<vitaminE>\d+)?%)?( \| thiamin (?<thiamin>\d+)?%)?( \n riboflavin (?<riboflavin>\d+)?%)?( \| niacin (?<niacin>\d+)?%)?( \n vitamin B6 (?<vitaminB6>\d+)?%)?( \| folate (?<folate>\d+)?%)?( \n phosphorus (?<phosphorus>\d+)?%)?( \| magnesium (?<magnesium>\d+)?%)?( \n zinc (?<zinc>\d+)?%)?( \| )?/gi;
 
@@ -67,7 +80,7 @@ export const fetchNutrition = async (
 };
 
 export const getRecipes = async (detectedObject, { navigation }) => {
-  const res = await Axios.get(
+  res = await Axios.get(
     `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=0&to=5&health=alcohol-free`
   );
   //TODO SETTINGS FOR FOOD PREFERENCES
@@ -109,4 +122,30 @@ export const getRecipes = async (detectedObject, { navigation }) => {
     totalDaily: foundTotalDaily,
     digest: foundDigest,
   });
+};
+
+export const getMoreRecipes = async ({
+  counter,
+  setCounter,
+  navigation,
+  route,
+}) => {
+  console.log("The object: " + detectedObject);
+  setCounter({ x: counter.x + 5, y: counter.y + 5 });
+  const res = await Axios.get(
+    `https://api.edamam.com/search?q=${detectedObject}&app_id=3b9bd214&app_key=d0cc4a37d31d0b366d8d591e8dbea72c&from=${counter.x}&to=${counter.y}&health=alcohol-free`
+  );
+
+  const foundRecipesLabels = res.data.hits.map((hit) => hit.recipe.label);
+  const foundRecipesImages = res.data.hits.map((hit) => hit.recipe.image);
+  const foundRecipesIngredients = res.data.hits.map((hit) =>
+    hit.recipe.ingredients.map((ingredient) => ingredient.text)
+  );
+  const foundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
+
+  navigation.setParams({
+    labels: labels.push("this is a test"),
+  });
+  console.log("route.params", route.params);
+  // console.log("getMoreRecipes -> test", test);
 };
