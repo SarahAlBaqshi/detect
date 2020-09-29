@@ -145,6 +145,9 @@ export const getMoreRecipes = async ({
       hit.recipe.ingredients.map((ingredient) => ingredient.text)
     );
     const foundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
+    const foundCalories = res.data.hits.map((hit) => hit.recipe.calories);
+    const foundYield = res.data.hits.map((hit) => hit.recipe.yield);
+    const foundTotalTime = res.data.hits.map((hit) => hit.recipe.totalTime);
 
     const { params } = route;
 
@@ -153,6 +156,9 @@ export const getMoreRecipes = async ({
       images: params.images.concat(foundRecipesImages),
       ingredients: params.ingredients.concat(foundRecipesIngredients),
       urls: params.urls.concat(foundRecipesUrls),
+      calories: params.calories.concat(foundCalories),
+      servingYield: params.servingYield.concat(foundYield),
+      totalTime: params.totalTime.concat(foundTotalTime),
     });
   } else {
     null;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Button, Text, Icon } from "native-base";
+import { Button, Text, Icon, Row, Card } from "native-base";
 
 export const RecipeImage = styled.Image`
   width: 100%;
@@ -66,4 +66,48 @@ export const IconStyled = styled(Icon)`
   color: white;
   margin: auto;
   align-self: center;
+`;
+
+export const RecipeIcon = styled(Icon)`
+  color: black;
+  margin-left: 5px;
+  font-size: 25px;
+`;
+
+export const RecipeCalories = styled.Text`
+  font-size: 15px;
+  text-align: center;
+  padding: 0px 7px;
+  font-weight: 400;
+  letter-spacing: 1px;
+`;
+export const RecipeTotalTime = styled.Text`
+  font-size: 15px;
+  text-align: center;
+  padding: 0px 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+`;
+export const RecipeServing = styled.Text`
+  font-size: 15px;
+  text-align: center;
+  padding: 0px 10px;
+  font-weight: 400;
+  letter-spacing: 1px;
+`;
+
+export const RecipeDescriptionRow = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 15px;
+  margin-top: 10px;
+`;
+
+export const KCAL = styled.Text`
+  font-weight: 900;
+  font-size: 22px;
+  color: black;
+  margin-bottom: 3px;
 `;
