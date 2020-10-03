@@ -14,20 +14,25 @@ export const identifyImage = async (
 ) => {
   setResult("");
   const app = new Clarifai.App({
-    apiKey: "0352be76758845c794f90c92cdbcac5d",
+    apiKey: "31e07c18707b4564bfbe97739e7036b7",
   });
 
   try {
     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
+    detectedObject = await res.outputs[0].data.concepts[0].name;
 
-    detectedObject = res.outputs[0].data.concepts[0].name;
+    // console.log("detectedObject in identifyImage", detectedObject);
 
-    if (detectedObject === "beer") {
+
+    if (detectedObject === "beer" /*TODO should we add || "wine"? */) {
       setResult("This item cannot be identified. Please try again.");
     } else {
       setResult("Detected " + detectedObject);
 
-      fetchNutrition(detectedObject, { setNutrition, setLoading });
+      fetchNutrition(res.outputs[0].data.concepts[0].name, {
+        setNutrition,
+        setLoading,
+      });
 
       getRecipes(detectedObject, { navigation });
 
@@ -51,27 +56,40 @@ const wrongItem = (app) => {
 };
 
 //TODO CONDITIONS EVERYWHERE
-const pattern = /serving size (?<servingSize>\d+ [a-z]+ \(\d+ [µmk]?g\))?\ntotal calories (?<totalCalories>\d+)? \| fat calories (?<fatCalories>\d+)?\n% daily value\^\* \|.+\n total fat (?<totalFat>\d+ [µmk]?g)? \| (?<totalFatPercent>\d+)?%\n saturated fat (?<saturatedFat>\d+ [µmk]?g)? \| (?<saturatedFatPercent>\d+)?%\n trans fat (?<transFat>\d+ [µmk]?g)?\|.+\n cholesterol (?<cholesterol>\d+ [µmk]?g)? \| (?<cholesterolPercent>\d+)?%\n sodium (?<sodium>\d+ [µmk]?g)? \| (?<sodiumPercent>\d+)?%\n total carbohydrates (?<totalCarbohydrates>\d+ [µmk]?g)? \| (?<carbohydratesPercent>\d+)?%\n dietary fiber (?<dietaryFiber>\d+ [µmk]?g)? \| (?<dietaryFiberPercent>\d+)?%\n sugar (?<sugar>\d+ [µmk]?g)? \|.+\n protein (?<protein>\d+ [µmk]?g)? \| (?<proteinPercent>\d+)?%\n vitamin A (?<vitaminA>\d+)?% \| vitamin C (?<vitaminC>\d+)?% \n( calcium (?<calcium>\d+)?%)?( \| iron (?<iron>\d+)?%)?( \n vitamin E (?<vitaminE>\d+)?%)?( \| thiamin (?<thiamin>\d+)?%)?( \n riboflavin (?<riboflavin>\d+)?%)?( \| niacin (?<niacin>\d+)?%)?( \n vitamin B6 (?<vitaminB6>\d+)?%)?( \| folate (?<folate>\d+)?%)?( \n phosphorus (?<phosphorus>\d+)?%)?( \| magnesium (?<magnesium>\d+)?%)?( \n zinc (?<zinc>\d+)?%)?( \| )?/gi;
+const pattern = /serving size (?<servingSize>\d+ [a-z]+ \(\d+ [µmk]?g\))?\ntotal calories (?<totalCalories>\d+)? \| fat calories (?<fatCalories>\d+)?\n% daily value\^\* \|.+\n total fat (?<totalFat>\d+ [µmk]?g)? \| (?<totalFatPercent>\d+)?%\n saturated fat (?<saturatedFat>\d+ [µmk]?g)? \| (?<saturatedFatPercent>\d+)?%\n trans fat (?<transFat>\d+ [µmk]?g)?\|.+\n cholesterol (?<cholesterol>\d+ [µmk]?g)? \| (?<cholesterolPercent>\d+)?%\n sodium (?<sodium>\d+ [µmk]?g)? \| (?<sodiumPercent>\d+)?%\n total carbohydrates (?<totalCarbohydrates>\d+ [µmk]?g)? \| (?<carbohydratesPercent>\d+)?%\n dietary fiber (?<dietaryFiber>\d+ [µmk]?g)? \| (?<dietaryFiberPercent>\d+)?%\n sugar (?<sugar>\d+ [µmk]?g)? \|.+\n protein (?<protein>\d+ [µmk]?g)? \| (?<proteinPercent>\d+)?%\n vitamin A (?<vitaminA>\d+)?% \| vitamin C (?<vitaminC>\d+)?% \n( calcium (?<calcium>\d+)?%)?( \| iron (?<iron>\d+)?%)?( \n vitamin E (?<vitaminE>\d+)?%)?( \| thiamin (?<thiamin>\d+)?%)?( \n riboflavin (?<riboflavin>\d+)?%)?( \| niacin (?<niacin>\d+)?%)?( \n vitamin B6 (?<vitaminB6>\d+)?%)?( \| folate (?<folate>\d+)?%)?( \n phosphorus (?<phosphorus>\d+)?%)?( \| magnesium (?<magnesium>\d+)?%)?( \n zinc (?<zinc>\d+)?%)?( \|)?/gi;
 
 export const fetchNutrition = async (
   detectedObject,
   { setNutrition, setLoading }
 ) => {
+  console.log("detectedObject", detectedObject);
   try {
     setNutrition("");
+    let m;
+    let z;
+    // TODO CAN'T WE INTERPOLATE THIS?
     const detectedObjectUrl =
       "http://api.wolframalpha.com/v2/query?input=" +
       detectedObject +
       "%20nutrition%20facts&appid=425X9Q-JEJJ2Q5LJ6";
+
     const response = await fetch(detectedObjectUrl);
-    parseString(await response.text(), function (err, result) {
-      const m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+    parseString(await response.text(), async function (err, result) {
+      m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+
       if (m !== null) {
         setNutrition(m.groups);
       } else {
-        setNutrition("Nutrition Failed");
+        z = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+        console.log("z", z);
+        if (z === null) {
+          setNutrition("Nutrition Failed");
+        } else {
+          setNutrition(z.groups);
+        }
       }
     });
+
     setLoading(false);
   } catch (err) {
     console.log("fetch", err);
