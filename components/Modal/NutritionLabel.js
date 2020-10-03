@@ -246,22 +246,32 @@ const NutritionLabel = ({ nutrition, recipe, perServing }) => {
         <PerformanceFactsView>
           <PerformanceFactsHeader>
             <PerformanceFactsTitle>Nutrition Facts</PerformanceFactsTitle>
-            <PerformanceFactsServing>
-              Serving Size
-              {nutrition.servingSize}
-            </PerformanceFactsServing>
+            {nutrition.servingSize ? (
+              <PerformanceFactsServing>
+                Serving Size
+                {nutrition.servingSize}
+              </PerformanceFactsServing>
+            ) : (
+              <PerformanceFactsServing>
+                Serving Size Unknown
+              </PerformanceFactsServing>
+            )}
           </PerformanceFactsHeader>
           <PerformanceFactsCals>
             <PerformanceFactsServing>
               Amount Per Serving:
             </PerformanceFactsServing>
             <Row>
-              <CalorieValues>
-                Total Calories {nutrition.totalCalories}
-              </CalorieValues>
-              <FatCalorieValues>
-                Fat Calories {nutrition.fatCalories}
-              </FatCalorieValues>
+              {nutrition.totalCalories && (
+                <CalorieValues>
+                  Total Calories {nutrition.totalCalories}
+                </CalorieValues>
+              )}
+              {nutrition.fatCalories && (
+                <FatCalorieValues>
+                  Fat Calories {nutrition.fatCalories}
+                </FatCalorieValues>
+              )}
             </Row>
           </PerformanceFactsCals>
 
@@ -269,172 +279,234 @@ const NutritionLabel = ({ nutrition, recipe, perServing }) => {
             <NutritionPercentValues> % Daily Value*</NutritionPercentValues>
           </PerformanceFactsNutrients>
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Total Fat</Text>
-              <NutritionValues>{nutrition.totalFat}</NutritionValues>
-              <NutritionPercentValues>
-                {nutrition.totalFatPercent}%
-              </NutritionPercentValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.totalFat && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <Text> Total Fat</Text>
+                <NutritionValues>{nutrition.totalFat}</NutritionValues>
+                {nutrition.proteinPercent && (
+                  <NutritionPercentValues>
+                    {nutrition.totalFatPercent}%
+                  </NutritionPercentValues>
+                )}
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Saturated Fat</Text>
-              <NutritionValues>{nutrition.saturatedFat}</NutritionValues>
-              <NutritionPercentValues>
-                {nutrition.saturatedFatPercent}%
-              </NutritionPercentValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.saturatedFat && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <Text> Saturated Fat</Text>
+                <NutritionValues>{nutrition.saturatedFat}</NutritionValues>
+                {nutrition.saturatedFatPercent && (
+                  <NutritionPercentValues>
+                    {nutrition.saturatedFatPercent}%
+                  </NutritionPercentValues>
+                )}
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Trans Fat</Text>
-              <NutritionValues>{nutrition.transFat}</NutritionValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.transFat && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <Text> Trans Fat</Text>
+                <NutritionValues>{nutrition.transFat}</NutritionValues>
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Cholesterol</Text>
-              <NutritionValues>{nutrition.cholesterol}</NutritionValues>
-              <NutritionPercentValues>
-                {nutrition.cholesterolPercent}%
-              </NutritionPercentValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.cholesterol && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <Text> Cholesterol</Text>
+                <NutritionValues>{nutrition.cholesterol}</NutritionValues>
+                {nutrition.cholesterolPercent && (
+                  <NutritionPercentValues>
+                    {nutrition.cholesterolPercent}%
+                  </NutritionPercentValues>
+                )}
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Sodium</Text>
-              <NutritionValues>{nutrition.sodium}</NutritionValues>
-              <NutritionPercentValues>
-                {nutrition.sodiumPercent}%
-              </NutritionPercentValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.sodium && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <Text> Sodium</Text>
+                <NutritionValues>{nutrition.sodium}</NutritionValues>
+                {nutrition.sodiumPercent && (
+                  <NutritionPercentValues>
+                    {nutrition.sodiumPercent}%
+                  </NutritionPercentValues>
+                )}
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Total Carbohydrates</Text>
-              <NutritionValues>{nutrition.totalCarbohydrates}</NutritionValues>
-              <NutritionPercentValues>
-                {nutrition.totalCarbohydratesPercent}%
-              </NutritionPercentValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.totalCarbohydrates && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <Text> Total Carbohydrates</Text>
+                <NutritionValues>
+                  {nutrition.totalCarbohydrates}
+                </NutritionValues>
+                {nutrition.carbohydratesPercent && (
+                  <NutritionPercentValues>
+                    {nutrition.carbohydratesPercent}%
+                  </NutritionPercentValues>
+                )}
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Dietary Fiber </Text>
-              <NutritionValues>{nutrition.dietaryFiber}</NutritionValues>
-              <NutritionPercentValues>
-                {nutrition.dietaryFiberPercent}%
-              </NutritionPercentValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.dietaryFiber && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <Text> Dietary Fiber </Text>
+                <NutritionValues>{nutrition.dietaryFiber}</NutritionValues>
+                {nutrition.dietaryFiberPercent && (
+                  <NutritionPercentValues>
+                    {nutrition.dietaryFiberPercent}%
+                  </NutritionPercentValues>
+                )}
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsNutrients>
-            <Row>
-              <Text> Sugar</Text>
-              <NutritionValues>{nutrition.sugar}</NutritionValues>
-            </Row>
-          </PerformanceFactsNutrients>
+          {nutrition.sugar && (
+            <PerformanceFactsNutrients>
+              <Row>
+                <>
+                  <Text> Sugar</Text>
+                  <NutritionValues>{nutrition.sugar}</NutritionValues>
+                </>
+              </Row>
+            </PerformanceFactsNutrients>
+          )}
 
-          <PerformanceFactsHeader>
-            <Row>
-              <Text> Protein</Text>
-              <NutritionValues>{nutrition.protein}</NutritionValues>
-              <NutritionPercentValues>
-                {nutrition.proteinPercent}%
-              </NutritionPercentValues>
-            </Row>
-          </PerformanceFactsHeader>
+          {nutrition.protein && (
+            <PerformanceFactsHeader>
+              <Row>
+                <Text> Protein</Text>
+                <NutritionValues>{nutrition.protein}</NutritionValues>
+                {nutrition.proteinPercent && (
+                  <NutritionPercentValues>
+                    {nutrition.proteinPercent}%
+                  </NutritionPercentValues>
+                )}
+              </Row>
+            </PerformanceFactsHeader>
+          )}
 
           <Grid>
             <Col>
-              <Row>
-                <Text> Vitamin A</Text>
-                <NutritionPercentValues>
-                  {nutrition.vitaminA}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text> Calcium</Text>
-                <NutritionPercentValues>
-                  {nutrition.calcium}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text> Vitamin E</Text>
-                <NutritionPercentValues>
-                  {nutrition.vitaminE}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text> Riboflavin</Text>
-                <NutritionPercentValues>
-                  {nutrition.riboflavin}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text> Vitamin B6</Text>
-                <NutritionPercentValues>
-                  {nutrition.vitaminB6}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text> Phosphorus</Text>
-                <NutritionPercentValues>
-                  {nutrition.phosphorus}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text> Zinc</Text>
-                <NutritionPercentValues>
-                  {nutrition.zinc}%
-                </NutritionPercentValues>
-              </Row>
+              {nutrition.vitaminA && (
+                <Row>
+                  <Text> Vitamin A</Text>
+                  <NutritionPercentValues>
+                    {nutrition.vitaminA}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.calcium && (
+                <Row>
+                  <Text> Calcium</Text>
+                  <NutritionPercentValues>
+                    {nutrition.calcium}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.vitaminE && (
+                <Row>
+                  <Text> Vitamin E</Text>
+                  <NutritionPercentValues>
+                    {nutrition.vitaminE}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.riboflavin && (
+                <Row>
+                  <Text> Riboflavin</Text>
+                  <NutritionPercentValues>
+                    {nutrition.riboflavin}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.vitaminB6 && (
+                <Row>
+                  <Text> Vitamin B6</Text>
+                  <NutritionPercentValues>
+                    {nutrition.vitaminB6}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.phosphorus && (
+                <Row>
+                  <Text> Phosphorus</Text>
+                  <NutritionPercentValues>
+                    {nutrition.phosphorus}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.zinc && (
+                <Row>
+                  <Text> Zinc</Text>
+                  <NutritionPercentValues>
+                    {nutrition.zinc}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
             </Col>
             <Col>
-              <Row>
-                <Text>Vitamin C</Text>
-                <NutritionPercentValues>
-                  {nutrition.vitaminC}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text>Iron</Text>
-                <NutritionPercentValues>
-                  {nutrition.iron}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text>Thiamin</Text>
-                <NutritionPercentValues>
-                  {nutrition.thiamin}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text>Niacin</Text>
-                <NutritionPercentValues>
-                  {nutrition.niacin}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text>Folate</Text>
-                <NutritionPercentValues>
-                  {nutrition.folate}%
-                </NutritionPercentValues>
-              </Row>
-              <Row>
-                <Text>Magnesium</Text>
-                <NutritionPercentValues>
-                  {nutrition.magnesium}%
-                </NutritionPercentValues>
-              </Row>
+              {nutrition.vitaminC && (
+                <Row>
+                  <Text>Vitamin C</Text>
+                  <NutritionPercentValues>
+                    {nutrition.vitaminC}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.iron && (
+                <Row>
+                  <Text>Iron</Text>
+                  <NutritionPercentValues>
+                    {nutrition.iron}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.thiamin && (
+                <Row>
+                  <Text>Thiamin</Text>
+                  <NutritionPercentValues>
+                    {nutrition.thiamin}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.niacin && (
+                <Row>
+                  <Text>Niacin</Text>
+                  <NutritionPercentValues>
+                    {nutrition.niacin}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.folate && (
+                <Row>
+                  <Text>Folate</Text>
+                  <NutritionPercentValues>
+                    {nutrition.folate}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
+              {nutrition.magnesium && (
+                <Row>
+                  <Text>Magnesium</Text>
+                  <NutritionPercentValues>
+                    {nutrition.magnesium}%
+                  </NutritionPercentValues>
+                </Row>
+              )}
             </Col>
           </Grid>
         </PerformanceFactsView>
@@ -442,6 +514,7 @@ const NutritionLabel = ({ nutrition, recipe, perServing }) => {
           <Asterisk>
             *Percent Daily Values are based on a 2000 calorie diet
           </Asterisk>
+          <Asterisk>(Excluded values are not available)</Asterisk>
         </PerformanceFactsFooter>
       </>
     );

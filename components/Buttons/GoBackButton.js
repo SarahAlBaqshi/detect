@@ -20,7 +20,20 @@ const GoBackButton = ({ detailPage }) => {
     );
   } else {
     return (
-      <TouchableOpacity onPress={() => navigation.goBack()}>
+      <TouchableOpacity
+        style={{
+          borderRadius: "50%",
+          shadowColor: "#000",
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 1,
+          shadowRadius: 3.84,
+          elevation: 5,
+        }}
+        onPress={() => navigation.goBack()}
+      >
         <IconWrapper>
           <GoBackIconDetailPage name="arrow-back" />
         </IconWrapper>

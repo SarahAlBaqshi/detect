@@ -138,7 +138,7 @@ export const IconWrapperIphone8 = styled.View`
 `;
 
 export const IconStyled = styled(Icon)`
-  font-size: 40px;
+  font-size: 36px;
   color: white;
   margin: auto;
   align-self: center;

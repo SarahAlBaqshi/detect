@@ -145,5 +145,9 @@ export const LoadingNutrition = styled.Text`
 export const NotThisIngredient = styled.Text`
   align-self: center;
   color: red;
-  margin-top: 20px;
+  margin-top: 15px;
+`;
+
+export const NotThisIngredientButton = styled(Button)`
+  align-self: center;
 `;

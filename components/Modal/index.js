@@ -19,6 +19,7 @@ import {
   ImagePreviewStyled,
   LoadingNutrition,
   NotThisIngredient,
+  NotThisIngredientButton,
 } from "./styles";
 import { ScrollView, View } from "react-native";
 import { Row, Spinner, Text, Button } from "native-base";
@@ -73,7 +74,7 @@ const index = ({
       <Modal animationType="slide" transparent={true} visible={openModal}>
         <CenteredView>
           <ModalView>
-            <ScrollView /* TODOshowsHorizontalScrollIndicator="false"*/>
+            <ScrollView /*TODO showsHorizontalScrollIndicator="false"*/>
               {imageUrl && live === false && (
                 <ImagePreviewStyled source={{ uri: imageUrl }} />
               )}
@@ -85,16 +86,16 @@ const index = ({
                 <>
                   <Spinner color="green" />
                   <LoadingNutrition>
-                    Loading Nutritional Information
+                    Loading Recipes and Nutritional Information
                   </LoadingNutrition>
                 </>
               ) : (
                 // <NutritionLabel>{nutrition.servingSize}</NutritionLabel>
                 <>
                   <NutritionLabel nutrition={nutrition} />
-                  <Button transparent>
+                  <NotThisIngredientButton transparent>
                     <NotThisIngredient>Not this Ingredient?</NotThisIngredient>
-                  </Button>
+                  </NotThisIngredientButton>
                 </>
               )}
             </ScrollView>
