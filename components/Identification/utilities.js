@@ -12,6 +12,7 @@ export const identifyImage = async (
   imageData,
   { setResult, setLoading, setLive, setOpenModal, setNutrition, navigation }
 ) => {
+  setResult("");
   const app = new Clarifai.App({
     apiKey: "0352be76758845c794f90c92cdbcac5d",
   });
@@ -20,7 +21,6 @@ export const identifyImage = async (
     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
 
     detectedObject = res.outputs[0].data.concepts[0].name;
-    // console.log("detectedObject in identifyImage", detectedObject);
 
     if (detectedObject === "beer") {
       setResult("This item cannot be identified. Please try again.");
