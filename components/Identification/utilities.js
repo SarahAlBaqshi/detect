@@ -13,13 +13,13 @@ export const identifyImage = async (
   { setResult, setLoading, setLive, setOpenModal, setNutrition, navigation }
 ) => {
   const app = new Clarifai.App({
-    apiKey: "0352be76758845c794f90c92cdbcac5d",
+    apiKey: "31e07c18707b4564bfbe97739e7036b7",
   });
 
   try {
     const res = await app.models.predict(Clarifai.FOOD_MODEL, imageData);
+    detectedObject = await res.outputs[0].data.concepts[0].name;
 
-    detectedObject = res.outputs[0].data.concepts[0].name;
     // console.log("detectedObject in identifyImage", detectedObject);
 
     if (detectedObject === "beer" /*TODO should we add || "wine"? */) {
@@ -27,7 +27,10 @@ export const identifyImage = async (
     } else {
       setResult("Detected " + detectedObject);
 
-      fetchNutrition(detectedObject, { setNutrition, setLoading });
+      fetchNutrition(res.outputs[0].data.concepts[0].name, {
+        setNutrition,
+        setLoading,
+      });
 
       getRecipes(detectedObject, { navigation });
 
@@ -57,25 +60,34 @@ export const fetchNutrition = async (
   detectedObject,
   { setNutrition, setLoading }
 ) => {
+  console.log("detectedObject", detectedObject);
   try {
     setNutrition("");
+    let m;
+    let z;
+    // TODO CAN'T WE INTERPOLATE THIS?
     const detectedObjectUrl =
       "http://api.wolframalpha.com/v2/query?input=" +
       detectedObject +
       "%20nutrition%20facts&appid=425X9Q-JEJJ2Q5LJ6";
+
     const response = await fetch(detectedObjectUrl);
-    parseString(await response.text(), function (err, result) {
-      const m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
-      console.log(
-        "result.queryresult.pod[1].subpod[0].img[0].$.alt",
-        result.queryresult.pod[1].subpod[0].img[0].$.alt
-      );
+    parseString(await response.text(), async function (err, result) {
+      m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+
       if (m !== null) {
         setNutrition(m.groups);
       } else {
-        setNutrition("Nutrition Failed");
+        z = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+        console.log("z", z);
+        if (z === null) {
+          setNutrition("Nutrition Failed");
+        } else {
+          setNutrition(z.groups);
+        }
       }
     });
+
     setLoading(false);
   } catch (err) {
     console.log("fetch", err);

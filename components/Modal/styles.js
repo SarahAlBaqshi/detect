@@ -106,6 +106,8 @@ export const PerformanceFactsNutrients = styled(View)`
 export const PerformanceFactsFooter = styled(View)`
   border-top-color: black;
   border-top-width: 4px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const NutritionPercentValues = styled.Text`
@@ -150,4 +152,8 @@ export const NotThisIngredient = styled.Text`
 
 export const NotThisIngredientButton = styled(Button)`
   align-self: center;
+`;
+
+export const NutritionFailedText = styled.Text`
+  text-align: center;
 `;

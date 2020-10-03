@@ -227,6 +227,9 @@ const RecipeDetail = ({ route, navigator }) => {
             </TouchableOpacity>
           </View>
           <Content padder>
+            <Text>{recipe.dietLabels}</Text>
+            <Text>Cautions: {recipe.cautions}</Text>
+
             <NutritionLabel recipe={recipe} />
           </Content>
         </>
