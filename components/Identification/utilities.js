@@ -12,6 +12,7 @@ export const identifyImage = async (
   imageData,
   { setResult, setLoading, setLive, setOpenModal, setNutrition, navigation }
 ) => {
+  setResult("");
   const app = new Clarifai.App({
     apiKey: "31e07c18707b4564bfbe97739e7036b7",
   });
@@ -21,6 +22,7 @@ export const identifyImage = async (
     detectedObject = await res.outputs[0].data.concepts[0].name;
 
     // console.log("detectedObject in identifyImage", detectedObject);
+
 
     if (detectedObject === "beer" /*TODO should we add || "wine"? */) {
       setResult("This item cannot be identified. Please try again.");
@@ -161,6 +163,9 @@ export const getMoreRecipes = async ({
       hit.recipe.ingredients.map((ingredient) => ingredient.text)
     );
     const foundRecipesUrls = res.data.hits.map((hit) => hit.recipe.url);
+    const foundCalories = res.data.hits.map((hit) => hit.recipe.calories);
+    const foundYield = res.data.hits.map((hit) => hit.recipe.yield);
+    const foundTotalTime = res.data.hits.map((hit) => hit.recipe.totalTime);
 
     const { params } = route;
 
@@ -169,6 +174,9 @@ export const getMoreRecipes = async ({
       images: params.images.concat(foundRecipesImages),
       ingredients: params.ingredients.concat(foundRecipesIngredients),
       urls: params.urls.concat(foundRecipesUrls),
+      calories: params.calories.concat(foundCalories),
+      servingYield: params.servingYield.concat(foundYield),
+      totalTime: params.totalTime.concat(foundTotalTime),
     });
   } else {
     null;
