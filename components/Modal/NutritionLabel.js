@@ -38,41 +38,97 @@ const NutritionLabel = ({ nutrition, recipe, perServing }) => {
     // console.log("NutritionLabel -> recipe", recipe);
     //--------------------------------RECIPES---------------------------------
     if (perServing) {
-      const caloriesPerServing = recipe.calories / recipe.servingYield;
-    } else {
-      const calories = Math.round(recipe.calories);
-      const fat = Math.round(recipe.totalNutrients.FAT.quantity);
+      const serving = recipe.servingYield;
+      const calories = Math.round(recipe.calories / serving) || null;
+      const fat =
+        Math.round(recipe.totalNutrients.FAT.quantity / serving) || null;
+      // TODO PARSEFLOAT
+      const fatPercent =
+        Math.round(recipe.totalDaily.FAT.quantity / serving) || null;
 
-      const fatPercent = Math.round(recipe.totalDaily.FAT.quantity);
+      const satFat =
+        Math.round(recipe.totalNutrients.FASAT.quantity / serving) || null;
+      const satFatPercent =
+        Math.round(recipe.totalDaily.FASAT.quantity / serving) || null;
 
-      const satFat = Math.round(recipe.totalNutrients.FASAT.quantity);
-      const satFatPercent = Math.round(recipe.totalDaily.FASAT.quantity);
+      const cholesterol =
+        Math.round(recipe.totalNutrients.CHOLE.quantity / serving) || null;
+      const cholesterolPercent =
+        Math.round(recipe.totalDaily.CHOLE.quantity / serving) || null;
 
-      const cholesterol = Math.round(recipe.totalNutrients.CHOLE.quantity);
-      const cholesterolPercent = Math.round(recipe.totalDaily.CHOLE.quantity);
+      const sodium =
+        Math.round(recipe.totalNutrients.NA.quantity / serving) || null;
+      const sodiumPercent =
+        Math.round(recipe.totalDaily.NA.quantity / serving) || null;
 
-      // TODO WHAT IF A VALUE DOESN'T EXIST?
-      console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOO", recipe.digest[1].total);
+      const carbohydrates =
+        Math.round(recipe.totalNutrients.CHOCDF.quantity / serving) || null;
+      const carbohydratesPercent =
+        Math.round(recipe.totalDaily.CHOCDF.quantity / serving) || null;
+
+      const dietaryFiber =
+        Math.round(recipe.totalNutrients.FIBTG.quantity / serving) || null;
+      const dietaryFiberPercent =
+        Math.round(recipe.totalDaily.FIBTG.quantity / serving) || null;
+
+      const sugar =
+        Math.round(recipe.totalNutrients.SUGAR.quantity / serving) || null;
+
+      // TODO const addedSugar = Math.round(recipe.totalNutrients.SUGAR.added.quantity / serving) || null;
+
+      const protein =
+        Math.round(recipe.totalNutrients.PROCNT.quantity / serving) || null;
+      const proteinPercent =
+        Math.round(recipe.totalDaily.PROCNT.quantity / serving) || null;
+
+      const vitaminA =
+        Math.round(recipe.totalDaily.VITA_RAE.quantity / serving) || null;
+
+      const calcium =
+        Math.round(recipe.totalDaily.CA.quantity / serving) || null;
+
+      const vitaminE =
+        Math.round(recipe.totalDaily.TOCPHA.quantity / serving) || null;
+
+      const riboflavin =
+        Math.round(recipe.totalDaily.RIBF.quantity / serving) || null;
+
+      const vitaminB6 =
+        Math.round(recipe.totalDaily.VITB6A.quantity / serving) || null;
+
+      const phosphorus =
+        Math.round(recipe.totalDaily.P.quantity / serving) || null;
+
+      const zinc = Math.round(recipe.totalDaily.ZN.quantity / serving) || null;
+
+      const vitaminC =
+        Math.round(recipe.totalDaily.VITC.quantity / serving) || null;
+
+      const iron = Math.round(recipe.totalDaily.FE.quantity / serving) || null;
+
+      const thiamin =
+        Math.round(recipe.totalDaily.THIA.quantity / serving) || null;
+
+      const niacin =
+        Math.round(recipe.totalDaily.NIA.quantity / serving) || null;
+
+      const folate =
+        Math.round(recipe.totalDaily.FOLDFE.quantity / serving) || null;
+
+      const magnesium =
+        Math.round(recipe.totalDaily.MG.quantity / serving) || null;
       return (
         <>
           {/*  TODO UTILIZE ALL OTHER RECIPE VALUES */}
           <PerformanceFactsView>
             <PerformanceFactsHeader>
               <PerformanceFactsTitle>Nutrition Facts</PerformanceFactsTitle>
-              {recipe.servingYield ? (
-                <PerformanceFactsServing>
-                  Serving Size {recipe.servingYield}
-                </PerformanceFactsServing>
-              ) : (
-                <PerformanceFactsServing>
-                  Serving Size Unknown
-                </PerformanceFactsServing>
-              )}
             </PerformanceFactsHeader>
             <PerformanceFactsCals>
-              <PerformanceFactsServing>
+              {/* <PerformanceFactsServing>
                 Amount Per Serving:
-              </PerformanceFactsServing>
+              </PerformanceFactsServing> */}
+              <PerformanceFactsServing>Per Serving:</PerformanceFactsServing>
               <Row>
                 {recipe.calories && (
                   <CalorieValues>Total Calories {calories}</CalorieValues>
@@ -149,67 +205,88 @@ const NutritionLabel = ({ nutrition, recipe, perServing }) => {
               </PerformanceFactsNutrients>
             )} */}
 
-            {recipe.sodium && (
+            {recipe.totalNutrients.NA.quantity && (
               <PerformanceFactsNutrients>
                 <Row>
                   <Text> Sodium</Text>
-                  <NutritionValues>{recipe.sodium}</NutritionValues>
-                  {recipe.sodiumPercent && (
+                  <NutritionValues>
+                    {sodium} {recipe.totalNutrients.NA.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.NA.quantity && (
                     <NutritionPercentValues>
-                      {recipe.sodiumPercent}%
+                      {sodiumPercent}%
                     </NutritionPercentValues>
                   )}
                 </Row>
               </PerformanceFactsNutrients>
             )}
 
-            {recipe.totalCarbohydrates && (
+            {recipe.totalNutrients.CHOCDF.quantity && (
               <PerformanceFactsNutrients>
                 <Row>
                   <Text> Total Carbohydrates</Text>
-                  <NutritionValues>{recipe.totalCarbohydrates}</NutritionValues>
-                  {recipe.carbohydratesPercent && (
+                  <NutritionValues>
+                    {carbohydrates} {recipe.totalNutrients.CHOCDF.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.CHOCDF.quantity && (
                     <NutritionPercentValues>
-                      {recipe.carbohydratesPercent}%
+                      {carbohydratesPercent}%
                     </NutritionPercentValues>
                   )}
                 </Row>
               </PerformanceFactsNutrients>
             )}
 
-            {recipe.dietaryFiber && (
+            {recipe.totalNutrients.FIBTG.quantity && (
               <PerformanceFactsNutrients>
                 <Row>
                   <Text> Dietary Fiber </Text>
-                  <NutritionValues>{recipe.dietaryFiber}</NutritionValues>
-                  {recipe.dietaryFiberPercent && (
+                  <NutritionValues>
+                    {dietaryFiber} {recipe.totalNutrients.CHOCDF.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.CHOCDF.quantity && (
                     <NutritionPercentValues>
-                      {recipe.dietaryFiberPercent}%
+                      {dietaryFiberPercent}%
                     </NutritionPercentValues>
                   )}
                 </Row>
               </PerformanceFactsNutrients>
             )}
 
-            {recipe.sugar && (
+            {recipe.totalNutrients.SUGAR.quantity && (
               <PerformanceFactsNutrients>
                 <Row>
                   <>
                     <Text> Sugar</Text>
-                    <NutritionValues>{recipe.sugar}</NutritionValues>
+                    <NutritionValues>
+                      {sugar} {recipe.totalNutrients.SUGAR.unit}
+                    </NutritionValues>
                   </>
                 </Row>
               </PerformanceFactsNutrients>
             )}
 
-            {recipe.protein && (
+            {/* //TODO {recipe.addedSugar && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <>
+                    <Text> Sugar</Text>
+                    <NutritionValues>{recipe.addedSugar}</NutritionValues>
+                  </>
+                </Row>
+              </PerformanceFactsNutrients>
+            )} */}
+
+            {recipe.totalNutrients.PROCNT.quantity && (
               <PerformanceFactsHeader>
                 <Row>
                   <Text> Protein</Text>
-                  <NutritionValues>{recipe.protein}</NutritionValues>
-                  {recipe.proteinPercent && (
+                  <NutritionValues>
+                    {protein} {recipe.totalNutrients.PROCNT.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.PROCNT.quantity && (
                     <NutritionPercentValues>
-                      {recipe.proteinPercent}%
+                      {proteinPercent}%
                     </NutritionPercentValues>
                   )}
                 </Row>
@@ -218,109 +295,441 @@ const NutritionLabel = ({ nutrition, recipe, perServing }) => {
 
             <Grid>
               <Col>
-                {recipe.vitaminA && (
+                {recipe.totalDaily.VITA_RAE.quantity && (
                   <Row>
                     <Text> Vitamin A</Text>
-                    <NutritionPercentValues>
-                      {recipe.vitaminA}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{vitaminA}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.calcium && (
+                {recipe.totalDaily.CA.quantity && (
                   <Row>
                     <Text> Calcium</Text>
-                    <NutritionPercentValues>
-                      {recipe.calcium}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{calcium}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.vitaminE && (
+                {recipe.totalDaily.TOCPHA.quantity && (
                   <Row>
                     <Text> Vitamin E</Text>
-                    <NutritionPercentValues>
-                      {recipe.vitaminE}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{vitaminE}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.riboflavin && (
+                {recipe.totalDaily.RIBF.quantity && (
                   <Row>
                     <Text> Riboflavin</Text>
                     <NutritionPercentValues>
-                      {recipe.riboflavin}%
+                      {riboflavin}%
                     </NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.vitaminB6 && (
+                {recipe.totalDaily.VITB6A.quantity && (
                   <Row>
                     <Text> Vitamin B6</Text>
                     <NutritionPercentValues>
-                      {recipe.vitaminB6}%
+                      {vitaminB6}%
                     </NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.phosphorus && (
+                {recipe.totalDaily.P.quantity && (
                   <Row>
                     <Text> Phosphorus</Text>
                     <NutritionPercentValues>
-                      {recipe.phosphorus}%
+                      {phosphorus}%
                     </NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.zinc && (
+                {recipe.totalDaily.ZN.quantity && (
                   <Row>
                     <Text> Zinc</Text>
-                    <NutritionPercentValues>
-                      {recipe.zinc}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{zinc}%</NutritionPercentValues>
                   </Row>
                 )}
               </Col>
               <Col>
-                {recipe.vitaminC && (
+                {recipe.totalDaily.VITC.quantity && (
                   <Row>
                     <Text>Vitamin C</Text>
-                    <NutritionPercentValues>
-                      {recipe.vitaminC}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{vitaminC}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.iron && (
+                {recipe.totalDaily.FE.quantity && (
                   <Row>
                     <Text>Iron</Text>
-                    <NutritionPercentValues>
-                      {recipe.iron}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{iron}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.thiamin && (
+                {recipe.totalDaily.THIA.quantity && (
                   <Row>
                     <Text>Thiamin</Text>
-                    <NutritionPercentValues>
-                      {recipe.thiamin}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{thiamin}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.niacin && (
+                {recipe.totalDaily.NIA.quantity && (
                   <Row>
                     <Text>Niacin</Text>
-                    <NutritionPercentValues>
-                      {recipe.niacin}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{niacin}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.folate && (
+                {recipe.totalDaily.FOLDFE.quantity && (
                   <Row>
                     <Text>Folate</Text>
-                    <NutritionPercentValues>
-                      {recipe.folate}%
-                    </NutritionPercentValues>
+                    <NutritionPercentValues>{folate}%</NutritionPercentValues>
                   </Row>
                 )}
-                {recipe.magnesium && (
+                {recipe.totalDaily.MG.quantity && (
                   <Row>
                     <Text>Magnesium</Text>
                     <NutritionPercentValues>
-                      {recipe.magnesium}%
+                      {magnesium}%
+                    </NutritionPercentValues>
+                  </Row>
+                )}
+              </Col>
+            </Grid>
+          </PerformanceFactsView>
+          <PerformanceFactsFooter>
+            <Asterisk>
+              *Percent Daily Values are based on a 2000 calorie diet
+            </Asterisk>
+            <Asterisk>(Excluded values are not available)</Asterisk>
+          </PerformanceFactsFooter>
+        </>
+      );
+    } else {
+      const calories = Math.round(recipe.calories) || null;
+      const fat = Math.round(recipe.totalNutrients.FAT.quantity) || null;
+
+      const fatPercent = Math.round(recipe.totalDaily.FAT.quantity) || null;
+
+      const satFat = Math.round(recipe.totalNutrients.FASAT.quantity) || null;
+      const satFatPercent =
+        Math.round(recipe.totalDaily.FASAT.quantity) || null;
+
+      const cholesterol =
+        Math.round(recipe.totalNutrients.CHOLE.quantity) || null;
+      const cholesterolPercent =
+        Math.round(recipe.totalDaily.CHOLE.quantity) || null;
+
+      const sodium = Math.round(recipe.totalNutrients.NA.quantity) || null;
+      const sodiumPercent = Math.round(recipe.totalDaily.NA.quantity) || null;
+
+      const carbohydrates =
+        Math.round(recipe.totalNutrients.CHOCDF.quantity) || null;
+      const carbohydratesPercent =
+        Math.round(recipe.totalDaily.CHOCDF.quantity) || null;
+
+      const dietaryFiber =
+        Math.round(recipe.totalNutrients.FIBTG.quantity) || null;
+      const dietaryFiberPercent =
+        Math.round(recipe.totalDaily.FIBTG.quantity) || null;
+
+      const sugar = Math.round(recipe.totalNutrients.SUGAR.quantity) || null;
+
+      // TODO const addedSugar = Math.round(recipe.totalNutrients.SUGAR.added.quantity) || null;
+
+      const protein = Math.round(recipe.totalNutrients.PROCNT.quantity) || null;
+      const proteinPercent =
+        Math.round(recipe.totalDaily.PROCNT.quantity) || null;
+
+      const vitaminA = Math.round(recipe.totalDaily.VITA_RAE.quantity) || null;
+
+      const calcium = Math.round(recipe.totalDaily.CA.quantity) || null;
+
+      const vitaminE = Math.round(recipe.totalDaily.TOCPHA.quantity) || null;
+
+      const riboflavin = Math.round(recipe.totalDaily.RIBF.quantity) || null;
+
+      const vitaminB6 = Math.round(recipe.totalDaily.VITB6A.quantity) || null;
+
+      const phosphorus = Math.round(recipe.totalDaily.P.quantity) || null;
+
+      const zinc = Math.round(recipe.totalDaily.ZN.quantity) || null;
+
+      const vitaminC = Math.round(recipe.totalDaily.VITC.quantity) || null;
+
+      const iron = Math.round(recipe.totalDaily.FE.quantity) || null;
+
+      const thiamin = Math.round(recipe.totalDaily.THIA.quantity) || null;
+
+      const niacin = Math.round(recipe.totalDaily.NIA.quantity) || null;
+
+      const folate = Math.round(recipe.totalDaily.FOLDFE.quantity) || null;
+
+      const magnesium = Math.round(recipe.totalDaily.MG.quantity) || null;
+
+      // TODO WHAT IF A VALUE DOESN'T EXIST?
+      console.log("HELLOOOOOOOOOOOOOOOOOOOOOOOOOOO", recipe.digest[1].total);
+      return (
+        <>
+          {/*  TODO UTILIZE ALL OTHER RECIPE VALUES */}
+          <PerformanceFactsView>
+            <PerformanceFactsHeader>
+              <PerformanceFactsTitle>Nutrition Facts</PerformanceFactsTitle>
+              {recipe.servingYield ? (
+                <PerformanceFactsServing>
+                  Serving Yield {recipe.servingYield} People
+                </PerformanceFactsServing>
+              ) : (
+                <PerformanceFactsServing>
+                  Serving Size Unknown
+                </PerformanceFactsServing>
+              )}
+            </PerformanceFactsHeader>
+            <PerformanceFactsCals>
+              {/* <PerformanceFactsServing>
+                Amount Per Serving:
+              </PerformanceFactsServing> */}
+              <PerformanceFactsServing>Full Meal:</PerformanceFactsServing>
+              <Row>
+                {recipe.calories && (
+                  <CalorieValues>Total Calories {calories}</CalorieValues>
+                )}
+                {recipe.fatCalories && (
+                  <FatCalorieValues>
+                    Fat Calories {recipe.fatCalories}
+                    {/* TODO */}
+                  </FatCalorieValues>
+                )}
+              </Row>
+            </PerformanceFactsCals>
+
+            <PerformanceFactsNutrients>
+              {/* TODO MAYBE ADD ASTERISK HERE? */}
+              <NutritionPercentValues> % Daily Value*</NutritionPercentValues>
+            </PerformanceFactsNutrients>
+
+            {recipe.totalNutrients.FAT.quantity && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <Text> Total Fat</Text>
+                  <NutritionValues>
+                    {fat} {recipe.totalNutrients.FAT.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.FAT.quantity && (
+                    <NutritionPercentValues>
+                      {fatPercent}%
+                    </NutritionPercentValues>
+                  )}
+                </Row>
+              </PerformanceFactsNutrients>
+            )}
+
+            {recipe.totalNutrients.FASAT.quantity && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <Text> Saturated Fat</Text>
+                  <NutritionValues>
+                    {satFat} {recipe.totalNutrients.FASAT.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.FASAT.quantity && (
+                    <NutritionPercentValues>
+                      {satFatPercent}%
+                    </NutritionPercentValues>
+                  )}
+                </Row>
+              </PerformanceFactsNutrients>
+            )}
+
+            {recipe.transFat && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <Text> Trans Fat</Text>
+                  <NutritionValues>{recipe.transFat}</NutritionValues>
+                </Row>
+              </PerformanceFactsNutrients>
+            )}
+            {/* TODO */}
+
+            {/*TODO {recipe.totalNutrients.CHOLE.quantity && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <Text> Cholesterol</Text>
+                  <NutritionValues>
+                    {cholesterol} {recipe.totalNutrients.CHOLE.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.CHOLE.quantity && (
+                    <NutritionPercentValues>
+                      {cholesterolPercent}%
+                    </NutritionPercentValues>
+                  )}
+                </Row>
+              </PerformanceFactsNutrients>
+            )} */}
+
+            {recipe.totalNutrients.NA.quantity && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <Text> Sodium</Text>
+                  <NutritionValues>
+                    {sodium} {recipe.totalNutrients.NA.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.NA.quantity && (
+                    <NutritionPercentValues>
+                      {sodiumPercent}%
+                    </NutritionPercentValues>
+                  )}
+                </Row>
+              </PerformanceFactsNutrients>
+            )}
+
+            {recipe.totalNutrients.CHOCDF.quantity && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <Text> Total Carbohydrates</Text>
+                  <NutritionValues>
+                    {carbohydrates} {recipe.totalNutrients.CHOCDF.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.CHOCDF.quantity && (
+                    <NutritionPercentValues>
+                      {carbohydratesPercent}%
+                    </NutritionPercentValues>
+                  )}
+                </Row>
+              </PerformanceFactsNutrients>
+            )}
+
+            {recipe.totalNutrients.FIBTG.quantity && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <Text> Dietary Fiber </Text>
+                  <NutritionValues>
+                    {dietaryFiber} {recipe.totalNutrients.CHOCDF.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.CHOCDF.quantity && (
+                    <NutritionPercentValues>
+                      {dietaryFiberPercent}%
+                    </NutritionPercentValues>
+                  )}
+                </Row>
+              </PerformanceFactsNutrients>
+            )}
+
+            {recipe.totalNutrients.SUGAR.quantity && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <>
+                    <Text> Sugar</Text>
+                    <NutritionValues>
+                      {sugar} {recipe.totalNutrients.SUGAR.unit}
+                    </NutritionValues>
+                  </>
+                </Row>
+              </PerformanceFactsNutrients>
+            )}
+
+            {/* //TODO {recipe.addedSugar && (
+              <PerformanceFactsNutrients>
+                <Row>
+                  <>
+                    <Text> Sugar</Text>
+                    <NutritionValues>{recipe.addedSugar}</NutritionValues>
+                  </>
+                </Row>
+              </PerformanceFactsNutrients>
+            )} */}
+
+            {recipe.totalNutrients.PROCNT.quantity && (
+              <PerformanceFactsHeader>
+                <Row>
+                  <Text> Protein</Text>
+                  <NutritionValues>
+                    {protein} {recipe.totalNutrients.PROCNT.unit}
+                  </NutritionValues>
+                  {recipe.totalDaily.PROCNT.quantity && (
+                    <NutritionPercentValues>
+                      {proteinPercent}%
+                    </NutritionPercentValues>
+                  )}
+                </Row>
+              </PerformanceFactsHeader>
+            )}
+
+            <Grid>
+              <Col>
+                {recipe.totalDaily.VITA_RAE.quantity && (
+                  <Row>
+                    <Text> Vitamin A</Text>
+                    <NutritionPercentValues>{vitaminA}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.CA.quantity && (
+                  <Row>
+                    <Text> Calcium</Text>
+                    <NutritionPercentValues>{calcium}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.TOCPHA.quantity && (
+                  <Row>
+                    <Text> Vitamin E</Text>
+                    <NutritionPercentValues>{vitaminE}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.RIBF.quantity && (
+                  <Row>
+                    <Text> Riboflavin</Text>
+                    <NutritionPercentValues>
+                      {riboflavin}%
+                    </NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.VITB6A.quantity && (
+                  <Row>
+                    <Text> Vitamin B6</Text>
+                    <NutritionPercentValues>
+                      {vitaminB6}%
+                    </NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.P.quantity && (
+                  <Row>
+                    <Text> Phosphorus</Text>
+                    <NutritionPercentValues>
+                      {phosphorus}%
+                    </NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.ZN.quantity && (
+                  <Row>
+                    <Text> Zinc</Text>
+                    <NutritionPercentValues>{zinc}%</NutritionPercentValues>
+                  </Row>
+                )}
+              </Col>
+              <Col>
+                {recipe.totalDaily.VITC.quantity && (
+                  <Row>
+                    <Text>Vitamin C</Text>
+                    <NutritionPercentValues>{vitaminC}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.FE.quantity && (
+                  <Row>
+                    <Text>Iron</Text>
+                    <NutritionPercentValues>{iron}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.THIA.quantity && (
+                  <Row>
+                    <Text>Thiamin</Text>
+                    <NutritionPercentValues>{thiamin}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.NIA.quantity && (
+                  <Row>
+                    <Text>Niacin</Text>
+                    <NutritionPercentValues>{niacin}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.FOLDFE.quantity && (
+                  <Row>
+                    <Text>Folate</Text>
+                    <NutritionPercentValues>{folate}%</NutritionPercentValues>
+                  </Row>
+                )}
+                {recipe.totalDaily.MG.quantity && (
+                  <Row>
+                    <Text>Magnesium</Text>
+                    <NutritionPercentValues>
+                      {magnesium}%
                     </NutritionPercentValues>
                   </Row>
                 )}

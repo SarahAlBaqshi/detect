@@ -55,6 +55,7 @@ const wrongItem = (app) => {
 };
 
 //TODO CONDITIONS EVERYWHERE
+
 const pattern = /(serving size )?(?<servingSize>\d+ [a-z]+ \(\d+ [µmk]?g\))?\n?total calories (?<totalCalories>\d+)? \| fat calories (?<fatCalories>\d+)?\n% daily value\^\* \|.+\n total fat (?<totalFat>\d+ [µmk]?g)? \| (?<totalFatPercent>\d+)?%\n saturated fat (?<saturatedFat>\d+ [µmk]?g)? \| (?<saturatedFatPercent>\d+)?%\n trans fat (?<transFat>\d+ [µmk]?g)?\|.+\n cholesterol (?<cholesterol>\d+ [µmk]?g)? \| (?<cholesterolPercent>\d+)?%\n sodium (?<sodium>\d+ [µmk]?g)? \| (?<sodiumPercent>\d+)?%\n total carbohydrates (?<totalCarbohydrates>\d+ [µmk]?g)? \| (?<carbohydratesPercent>\d+)?%\n dietary fiber (?<dietaryFiber>\d+ [µmk]?g)? \| (?<dietaryFiberPercent>\d+)?%\n sugar (?<sugar>\d+ [µmk]?g)? \|.+\n protein (?<protein>\d+ [µmk]?g)? \| (?<proteinPercent>\d+)?%\n vitamin A (?<vitaminA>\d+)?% \| vitamin C (?<vitaminC>\d+)?% \n( calcium (?<calcium>\d+)?%)? ?((\|)?( )?iron (?<iron>\d+)?%)?( \n vitamin E (?<vitaminE>\d+)?%)?( \| thiamin (?<thiamin>\d+)?%)?( \n riboflavin (?<riboflavin>\d+)?%)?( \| niacin (?<niacin>\d+)?%)?( \n vitamin B6 (?<vitaminB6>\d+)?%)?( \| folate (?<folate>\d+)?%)?( \n phosphorus (?<phosphorus>\d+)?%)?( \| magnesium (?<magnesium>\d+)?%)?( \n zinc (?<zinc>\d+)?%)?( \|)?/gi;
 
 export const fetchNutrition = async (
@@ -77,10 +78,9 @@ export const fetchNutrition = async (
 
     const response = await fetch(detectedObjectUrl);
     parseString(await response.text(), async function (err, result) {
-      console.log(
-        "result.queryresult.pod[1].subpod[0].img[0].$.alt",
-        result.queryresult.pod[1].subpod[0].img[0].$.alt
-      );
+
+      console.log("result", result.queryresult.pod[1].subpod[0].img[0].$.alt);
+
       m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
       console.log("m", m);
 

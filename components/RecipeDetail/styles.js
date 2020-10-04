@@ -1,4 +1,4 @@
-import { Button } from "native-base";
+import { Button, Text } from "native-base";
 import styled from "styled-components";
 
 export const StyledScrollView = styled.ScrollView`
@@ -45,4 +45,18 @@ export const StyledView = styled.View`
 export const BookmarkButton = styled(Button)`
   margin-left: auto;
   align-self: center;
+`;
+
+export const ShowNutritionText = styled.Text`
+  color: #588157;
+  font-weight: bold;
+`;
+
+export const ShowNutritionButton = styled(Button)`
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+export const DietText = styled.Text`
+  font-weight: bold;
 `;
