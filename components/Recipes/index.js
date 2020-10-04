@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Content,
   List,
@@ -18,19 +18,28 @@ import { observer } from "mobx-react";
 import { SwipeListView } from "react-native-swipe-list-view";
 //TODO^^
 const Recipes = ({ navigation }) => {
-  const bookmarks = bookmarkStore.bookmarks.map((recipe) => (
-    <BookmarkedRecipeItem
-      recipe={recipe}
-      navigation={navigation}
-      key={recipe.label}
-    />
-  ));
+  const [query, setQuery] = useState("");
+
+  const onChangeSearch = (query) => {
+    setQuery(query);
+  };
+
+  const bookmarks = bookmarkStore.bookmarks
+    .filter((recipe) =>
+      recipe.label.toLowerCase().includes(query.toLowerCase())
+    )
+    .map((recipe) => (
+      <BookmarkedRecipeItem
+        recipe={recipe}
+        navigation={navigation}
+        key={recipe.label}
+      />
+    ));
   return bookmarks.length > 0 ? (
     <ScrollView>
-      <BookmarksHeader>Bookmarks</BookmarksHeader>
       <Item rounded style={{ border: "4px black" }}>
         <Icon active name="search" />
-        <Input placeholder="Search" />
+        <Input placeholder="Search Recipes" onChangeText={onChangeSearch} />
         {/* Searchbar in header? */}
       </Item>
       <Content>
@@ -41,6 +50,11 @@ const Recipes = ({ navigation }) => {
     </ScrollView>
   ) : (
     <ScrollView>
+      <Item rounded style={{ border: "4px black" }}>
+        <Icon active name="search" />
+        <Input placeholder="Search Recipes" onChangeText={onChangeSearch} />
+        {/* Searchbar in header? */}
+      </Item>
       <NoBookmarksText>You Have No Bookmarks</NoBookmarksText>
       <NoBookmarksMsg>
         Please bookmark some recipes using the bookmark button on the recipe

@@ -68,22 +68,26 @@ const CameraView = ({ route }) => {
       <Camera style={{ flex: 1 }} type={type} ref={ref}>
         <View
           style={{
-            flex: 1,
             backgroundColor: "transparent",
-            flexDirection: "row",
+            justifyContent: "center",
+            marginTop: "auto",
+            marginBottom: "auto",
           }}
         >
           <TouchableOpacity onPress={_takePhoto}>
             <FocusIcon name="crop-free" type="MaterialCommunityIcons" />
           </TouchableOpacity>
-        </View>
-        <View>
           <Animatable.Text
             animation="fadeOutDownBig"
             delay="5000"
-            style={{ fontSize: 40, padding: "10%", color: "white" }}
+            style={{
+              fontSize: 30,
+              color: "white",
+              textAlign: "center",
+              padding: "10%",
+            }}
           >
-            Zoom me up, Scotty
+            Tap on the frame above to take a picture
           </Animatable.Text>
         </View>
       </Camera>
