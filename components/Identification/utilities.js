@@ -14,7 +14,7 @@ export const identifyImage = async (
 ) => {
   setResult("");
   const app = new Clarifai.App({
-    apiKey: "0352be76758845c794f90c92cdbcac5d",
+    apiKey: "31e07c18707b4564bfbe97739e7036b7",
   });
 
   try {
