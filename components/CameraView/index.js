@@ -3,6 +3,10 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { Camera } from "expo-camera";
 import * as FileSystem from "expo-file-system";
 import { FocusIcon } from "./styles";
+import Fade from "react-native-fade";
+import { Button } from "native-base";
+
+import * as Animatable from "react-native-animatable";
 
 const CameraView = ({ route }) => {
   const {
@@ -15,8 +19,8 @@ const CameraView = ({ route }) => {
     setOpenModal,
     navigation,
   } = route.params;
-  // console.log("route", route);
 
+  const [visible, setVisible] = useState(true);
   const [hasPermission, setHasPermission] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const ref = useRef(null);
@@ -69,27 +73,18 @@ const CameraView = ({ route }) => {
             flexDirection: "row",
           }}
         >
-          {/* <TouchableOpacity
-            style={{
-              flex: 0.1,
-              alignSelf: "flex-end",
-              alignItems: "center",
-            }}
-            onPress={() => {
-              setType(
-                type === Camera.Constants.Type.back
-                  ? Camera.Constants.Type.front
-                  : Camera.Constants.Type.back
-              );
-            }}
-          >
-            <Text style={{ fontSize: 18, marginBottom: 10, color: "white" }}>
-              Flip
-            </Text>
-          </TouchableOpacity> */}
           <TouchableOpacity onPress={_takePhoto}>
             <FocusIcon name="crop-free" type="MaterialCommunityIcons" />
           </TouchableOpacity>
+        </View>
+        <View>
+          <Animatable.Text
+            animation="fadeOutDownBig"
+            delay="5000"
+            style={{ fontSize: 40, padding: "10%", color: "white" }}
+          >
+            Zoom me up, Scotty
+          </Animatable.Text>
         </View>
       </Camera>
     </View>
