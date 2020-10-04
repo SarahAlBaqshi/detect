@@ -63,6 +63,7 @@ export const fetchNutrition = async (
   { setNutrition, setLoading }
 ) => {
   console.log("detectedObject", detectedObject);
+
   try {
     setNutrition("");
     let m;
@@ -73,10 +74,15 @@ export const fetchNutrition = async (
       detectedObject +
       "%20nutrition%20facts&appid=425X9Q-JEJJ2Q5LJ6";
 
+    console.log("detectedObjectUrl", detectedObjectUrl);
+
     const response = await fetch(detectedObjectUrl);
     parseString(await response.text(), async function (err, result) {
+
       console.log("result", result.queryresult.pod[1].subpod[0].img[0].$.alt);
+
       m = pattern.exec(result.queryresult.pod[1].subpod[0].img[0].$.alt);
+      console.log("m", m);
 
       if (m !== null) {
         setNutrition(m.groups);
