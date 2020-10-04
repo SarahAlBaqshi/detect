@@ -22,7 +22,25 @@ export const BackWrapper = styled(TouchableOpacity)`
   height: 40px;
   margin-top: 10px;
   margin-bottom: 10px;
+
+  /* padding-right: 10px; */
+`;
+
+export const LightboxButtonWrapper = styled(TouchableOpacity)`
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  margin-top: 50px;
   margin-left: 10px;
+  /* //TODO FIX SHADOW
+  shadow-offset: {
+    width: 0;
+    height: 0.5;
+  } */
+
   /* padding-right: 10px; */
 `;
 

@@ -22,7 +22,9 @@ import Lightbox from "react-native-lightbox";
 // Styles
 import {
   RecipeImage,
+  ShowNutritionText,
   RecipeLabel,
+  ShowNutritionButton,
   Label,
   RecipeIngredients,
   StyledScrollView,
@@ -41,6 +43,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { observer } from "mobx-react";
+import GoBackButton from "../Buttons/GoBackButton";
 
 const { Value, timing } = Animated;
 
@@ -49,6 +52,10 @@ const RecipeDetail = ({ route, navigator }) => {
   const [nutrition, setNutrition] = useState(false);
   const [checked, setChecked] = useState(false);
   const [toggle, setToggle] = useState(true); // True = left, fase = right
+  const [showOrHideNutrition, setShowOrHideNutrition] = useState(
+    "Show Nutrition"
+  );
+
   const ingredients = recipe.ingredient.map((oneIngredient) => (
     <CheckBox
       title={oneIngredient}
@@ -77,7 +84,12 @@ const RecipeDetail = ({ route, navigator }) => {
 
   return (
     <StyledScrollView>
-      <Lightbox navigator={navigator} backgroundColor="#588157E6">
+      <Lightbox
+        navigator={navigator}
+        backgroundColor="#588157E6"
+        renderHeader={() => <GoBackButton lightBox />}
+        // options={{ useNativeDriver: true }}
+      >
         <RecipeImage alt={recipe.label} source={{ uri: recipe.image }} />
       </Lightbox>
       <RecipeLabel>{recipe.label}</RecipeLabel>
@@ -88,14 +100,19 @@ const RecipeDetail = ({ route, navigator }) => {
         <ButtonStyled onPress={() => Linking.openURL(recipe.url)}>
           <Text>View Entire Recipe</Text>
         </ButtonStyled>
-        <Button
+        <ShowNutritionButton
           transparent
           onPress={() => {
-            setNutrition(!nutrition);
+            setNutrition(!nutrition),
+              setShowOrHideNutrition(
+                showOrHideNutrition === "Show Nutrition"
+                  ? "Hide Nutrition"
+                  : "Show Nutrition"
+              );
           }}
         >
-          <Text>Show Nutrition</Text>
-        </Button>
+          <ShowNutritionText>{showOrHideNutrition}</ShowNutritionText>
+        </ShowNutritionButton>
         {bookmark ? (
           <BookmarkButton
             transparent
@@ -183,7 +200,7 @@ const RecipeDetail = ({ route, navigator }) => {
               flex: 1,
             }}
           >
-            <Animated.View
+            {/* <Animated.View
               style={[
                 {
                   width: 125,
@@ -203,7 +220,7 @@ const RecipeDetail = ({ route, navigator }) => {
                 },
                 { transform: [{ translateX: transX }] },
               ]}
-            />
+            /> */}
             <TouchableOpacity
               onPress={(() => anim.start(), () => setToggle(true))}
               style={{ marginLeft: "auto", paddingRight: "25%" }}
@@ -227,10 +244,28 @@ const RecipeDetail = ({ route, navigator }) => {
             </TouchableOpacity>
           </View>
           <Content padder>
-            <Text>{recipe.dietLabels}</Text>
-            <Text>Cautions: {recipe.cautions}</Text>
-
-            <NutritionLabel recipe={recipe} />
+            {/* {recipe.dietLabels !== [] ?? (
+              <Row>
+                <DietText>Benefits:</DietText>
+                <Text> {recipe.dietLabels}</Text>
+              </Row>
+            )}
+           {recipe.cautions !== [] ?? (
+              <Row>
+                <DietText>Cautions:</DietText>
+                <Text> {recipe.cautions}</Text>
+              </Row>
+            )}
+            {toggle === true ? (
+              <NutritionLabel recipe={recipe} />
+            ) : (
+              <NutritionLabel perServing recipe={recipe} />
+            )}  */}
+            {toggle === true ? (
+              <NutritionLabel recipe={recipe} />
+            ) : (
+              <NutritionLabel perServing recipe={recipe} />
+            )}
           </Content>
         </>
       )}
